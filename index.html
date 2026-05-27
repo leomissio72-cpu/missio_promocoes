@@ -22,7 +22,6 @@
             margin: 0 auto;
         }
 
-        /* Cabeçalho */
         .header {
             text-align: center;
             margin-bottom: 28px;
@@ -58,7 +57,6 @@
             color: #FF5E00;
         }
 
-        /* Busca */
         .search-box {
             margin-bottom: 24px;
             position: relative;
@@ -87,7 +85,6 @@
             pointer-events: none;
         }
 
-        /* Categorias em ordem alfabética */
         .categories {
             display: flex;
             gap: 12px;
@@ -119,7 +116,6 @@
             border-color: #FF8C40;
         }
 
-        /* Cards com carrossel */
         .products-grid {
             display: flex;
             flex-direction: column;
@@ -282,11 +278,6 @@
             color: #888;
             font-weight: 500;
         }
-
-        /* toque suave */
-        .carousel-container {
-            touch-action: pan-y pinch-zoom;
-        }
     </style>
 </head>
 <body>
@@ -302,19 +293,22 @@
         <input type="text" id="searchInput" placeholder="Buscar produto...">
     </div>
 
+    <!-- Categorias em ordem alfabética (incluindo Pet e Negócio) -->
     <div class="categories" id="categoryFilter">
         <button class="cat-btn active" data-cat="todos">📦 Todos</button>
         <button class="cat-btn" data-cat="bijuterias">💎 Bijuterias</button>
+        <button class="cat-btn" data-cat="carro">🚗 Carro</button>
         <button class="cat-btn" data-cat="casa">🏠 Casa & Decoração</button>
         <button class="cat-btn" data-cat="cosmeticos">💄 Cosméticos</button>
         <button class="cat-btn" data-cat="eletronicos">📱 Eletrônicos</button>
+        <button class="cat-btn" data-cat="esportes">⚽ Esportes</button>
         <button class="cat-btn" data-cat="moda-feminina">👗 Moda Feminina</button>
         <button class="cat-btn" data-cat="moda-infantil">🧸 Moda Infantil</button>
         <button class="cat-btn" data-cat="moda-masculina">👔 Moda Masculina</button>
-        <button class="cat-btn" data-cat="carro">🚗 Para seu Carro</button>
-        <button class="cat-btn" data-cat="moto">🏍️ Para sua Moto</button>
+        <button class="cat-btn" data-cat="moto">🏍️ Moto</button>
+        <button class="cat-btn" data-cat="negocio">💼 Seu Negócio</button>
         <button class="cat-btn" data-cat="pesca">🎣 Pesca & Aventura</button>
-        <button class="cat-btn" data-cat="esportes">⚽ Esportes</button>
+        <button class="cat-btn" data-cat="pet">🐾 Pet</button>
     </div>
 
     <div class="products-grid" id="productsContainer"></div>
@@ -325,123 +319,115 @@
 
 <script>
     // ============================================================
-    // PRODUTOS COM MÚLTIPLAS IMAGENS (CARROSSEL)
-    // Agora cada produto tem "imagens": ["url1", "url2", ...]
+    // PRODUTOS COM MÚLTIPLAS IMAGENS + NOVAS CATEGORIAS: PET e NEGÓCIO
     // ============================================================
     const produtos = [
-        // Bijuterias (exemplo com 2 imagens)
-        { 
-            id: 1, nome: "Kit Brincos + Colar", descricao: "Conjunto elegante em dourado.", preco: "R$ 39,90", 
-            imagens: [
-                "https://placehold.co/600x400/FFE0B5/FF5E00?text=Brincos+1",
-                "https://placehold.co/600x400/FFE0B5/FF5E00?text=Colar+2"
-            ], 
-            link: "https://shopee.com.br/SEU_LINK_BIJU", categoria: "bijuterias", loja: "shopee" 
-        },
-        { 
-            id: 2, nome: "Pulseira Aço Inoxidável", descricao: "Banho de ouro, unissex.", preco: "R$ 29,90", 
-            imagens: [
-                "https://placehold.co/600x400/FFE0B5/FF5E00?text=Pulseira+Ouro",
-                "https://placehold.co/600x400/FFE0B5/FF5E00?text=Pulseira+Prata"
-            ], 
-            link: "https://amzn.to/SEU_LINK_PULSEIRA", categoria: "bijuterias", loja: "amazon" 
-        },
-        // Casa
-        { 
-            id: 3, nome: "Luminária LED RGB", descricao: "Controle remoto, 16 cores.", preco: "R$ 59,90", 
-            imagens: [
-                "https://placehold.co/600x400/FFE0B5/FF5E00?text=Luminaria+Azul",
-                "https://placehold.co/600x400/FFE0B5/FF5E00?text=Luminaria+Verde",
-                "https://placehold.co/600x400/FFE0B5/FF5E00?text=Luminaria+Vermelha"
-            ], 
-            link: "https://mercadolivre.com.br/SEU_LINK_LUMI", categoria: "casa", loja: "mercadolivre" 
-        },
-        { id: 4, nome: "Jogo de Lençóis 4 peças", descricao: "Algodão egípcio.", preco: "R$ 129,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Lencol+Branco", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Lencol+Cinza"], 
-            link: "https://amzn.to/SEU_LINK_LENCOL", categoria: "casa", loja: "amazon" 
-        },
-        // Cosméticos
-        { id: 5, nome: "Perfume Importado", descricao: "Fragrância marcante.", preco: "R$ 149,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Perfume+1", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Perfume+2"], 
-            link: "https://mercadolivre.com.br/SEU_LINK_PERFUME", categoria: "cosmeticos", loja: "mercadolivre" 
-        },
-        // Eletrônicos (com sua imagem real da Shopee + mais uma)
-        { 
-            id: 6, nome: "Carregador Portátil 20000mAh", descricao: "USB-C, carrega 2 dispositivos.", preco: "R$ 89,90", 
-            imagens: [
-                "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mf04j3pg9tzbb1.webp",
-                "https://placehold.co/600x400/FFE0B5/FF5E00?text=Carregador+2",
-                "https://placehold.co/600x400/FFE0B5/FF5E00?text=Carregador+3"
-            ], 
-            link: "https://shopee.com.br/SEU_LINK_CARREGADOR", categoria: "eletronicos", loja: "shopee" 
-        },
-        { id: 7, nome: "Fone Bluetooth ANC", descricao: "Cancelamento de ruído.", preco: "R$ 199,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Fone+1", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Fone+2"], 
-            link: "https://amzn.to/SEU_LINK_FONE", categoria: "eletronicos", loja: "amazon" 
-        },
-        // Moda Feminina
-        { id: 8, nome: "Vestido Longo Floral", descricao: "Leve, festas e eventos.", preco: "R$ 139,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Vestido+1", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Vestido+2"], 
-            link: "https://amzn.to/SEU_LINK_VESTIDO", categoria: "moda-feminina", loja: "amazon" 
-        },
-        { id: 9, nome: "Sandália Salto Bloqueado", descricao: "Conforto e estilo.", preco: "R$ 89,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Sandalia+1", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Sandalia+2"], 
-            link: "https://shopee.com.br/SEU_LINK_SANDALIA", categoria: "moda-feminina", loja: "shopee" 
-        },
-        // Moda Infantil
-        { id: 10, nome: "Conjunto Baby Menina", descricao: "Macacão com laço.", preco: "R$ 49,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Baby+1", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Baby+2"], 
-            link: "https://shopee.com.br/SEU_LINK_BABY", categoria: "moda-infantil", loja: "shopee" 
-        },
-        { id: 11, nome: "Camiseta Estampada", descricao: "Personagens, tam 2 a 10.", preco: "R$ 29,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Camiseta+Inf+1", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Camiseta+Inf+2"], 
-            link: "https://amzn.to/SEU_LINK_CAMISETA_INF", categoria: "moda-infantil", loja: "amazon" 
-        },
-        // Moda Masculina
-        { id: 12, nome: "Camisa Polo Básica", descricao: "Algodão, confortável.", preco: "R$ 59,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Polo+Azul", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Polo+Verde"], 
-            link: "https://mercadolivre.com.br/SEU_LINK_POLO", categoria: "moda-masculina", loja: "mercadolivre" 
-        },
-        { id: 13, nome: "Tênis Casual Couro", descricao: "Solado antiderrapante.", preco: "R$ 159,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Tenis+1", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Tenis+2"], 
-            link: "https://amzn.to/SEU_LINK_TENIS_MASC", categoria: "moda-masculina", loja: "amazon" 
-        },
-        // Carro
-        { id: 14, nome: "Aspirador Portátil 12V", descricao: "Potente, fácil limpeza.", preco: "R$ 79,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Aspirador+1", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Aspirador+2"], 
-            link: "https://mercadolivre.com.br/SEU_LINK_ASPIRADOR", categoria: "carro", loja: "mercadolivre" 
-        },
-        { id: 15, nome: "Tapetes Automotivos", descricao: "Sob medida, antiderrapante.", preco: "R$ 99,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Tapete+Dianteiro", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Tapete+Traseiro"], 
-            link: "https://shopee.com.br/SEU_LINK_TAPETES", categoria: "carro", loja: "shopee" 
-        },
-        // Moto
-        { id: 16, nome: "Capacete Fechado", descricao: "Viseira anti-risco.", preco: "R$ 199,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Capacete+Preto", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Capacete+Branco"], 
-            link: "https://amzn.to/SEU_LINK_CAPACETE", categoria: "moto", loja: "amazon" 
-        },
-        { id: 17, nome: "Suporte para Moto", descricao: "Fixação no guidão.", preco: "R$ 39,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Suporte+1", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Suporte+2"], 
-            link: "https://mercadolivre.com.br/SEU_LINK_SUPORTE", categoria: "moto", loja: "mercadolivre" 
-        },
-        // Pesca
-        { id: 18, nome: "Kit de Pesca Iniciante", descricao: "Vara + molinete + acessórios.", preco: "R$ 89,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Kit+Pesca+1", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Kit+Pesca+2"], 
-            link: "https://amzn.to/SEU_LINK_PESCA", categoria: "pesca", loja: "amazon" 
-        },
-        { id: 19, nome: "Mochila Tática Aventura", descricao: "40L, resistente à água.", preco: "R$ 129,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Mochila+Verde", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Mochila+Preta"], 
-            link: "https://shopee.com.br/SEU_LINK_MOCHILA", categoria: "pesca", loja: "shopee" 
-        },
-        // Esportes
-        { id: 20, nome: "Camisa Dry Fit", descricao: "Leve, anti-suor.", preco: "R$ 49,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Dry+Fit+Azul", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Dry+Fit+Vermelha"], 
-            link: "https://mercadolivre.com.br/SEU_LINK_DRYFIT", categoria: "esportes", loja: "mercadolivre" 
-        },
-        { id: 21, nome: "Caneleira de Peso 2kg", descricao: "Par ajustável.", preco: "R$ 35,90", 
-            imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Caneleira+2kg", "https://placehold.co/600x400/FFE0B5/FF5E00?text=Caneleira+uso"], 
-            link: "https://amzn.to/SEU_LINK_CANELEIRA", categoria: "esportes", loja: "amazon" 
-        }
+        // --- BIJUTERIAS ---
+        { id: 1, nome: "Kit Brincos + Colar", descricao: "Conjunto elegante em dourado.", preco: "R$ 39,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Brincos+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Colar+2"], 
+          link: "https://shopee.com.br/SEU_LINK_BIJU", categoria: "bijuterias", loja: "shopee" },
+        { id: 2, nome: "Pulseira Aço Inoxidável", descricao: "Banho de ouro, unissex.", preco: "R$ 29,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Pulseira+Ouro","https://placehold.co/600x400/FFE0B5/FF5E00?text=Pulseira+Prata"], 
+          link: "https://amzn.to/SEU_LINK_PULSEIRA", categoria: "bijuterias", loja: "amazon" },
+
+        // --- CARRO ---
+        { id: 3, nome: "Aspirador Portátil 12V", descricao: "Potente, fácil limpeza.", preco: "R$ 79,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Aspirador+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Aspirador+2"], 
+          link: "https://mercadolivre.com.br/SEU_LINK_ASPIRADOR", categoria: "carro", loja: "mercadolivre" },
+        { id: 4, nome: "Tapetes Automotivos", descricao: "Sob medida, antiderrapante.", preco: "R$ 99,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Tapete+Dianteiro","https://placehold.co/600x400/FFE0B5/FF5E00?text=Tapete+Traseiro"], 
+          link: "https://shopee.com.br/SEU_LINK_TAPETES", categoria: "carro", loja: "shopee" },
+
+        // --- CASA ---
+        { id: 5, nome: "Luminária LED RGB", descricao: "Controle remoto, 16 cores.", preco: "R$ 59,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Luminaria+Azul","https://placehold.co/600x400/FFE0B5/FF5E00?text=Luminaria+Verde","https://placehold.co/600x400/FFE0B5/FF5E00?text=Luminaria+Vermelha"], 
+          link: "https://mercadolivre.com.br/SEU_LINK_LUMI", categoria: "casa", loja: "mercadolivre" },
+        { id: 6, nome: "Jogo de Lençóis 4 peças", descricao: "Algodão egípcio.", preco: "R$ 129,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Lencol+Branco","https://placehold.co/600x400/FFE0B5/FF5E00?text=Lencol+Cinza"], 
+          link: "https://amzn.to/SEU_LINK_LENCOL", categoria: "casa", loja: "amazon" },
+
+        // --- COSMÉTICOS ---
+        { id: 7, nome: "Perfume Importado", descricao: "Fragrância marcante.", preco: "R$ 149,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Perfume+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Perfume+2"], 
+          link: "https://mercadolivre.com.br/SEU_LINK_PERFUME", categoria: "cosmeticos", loja: "mercadolivre" },
+
+        // --- ELETRÔNICOS (imagem real da Shopee) ---
+        { id: 8, nome: "Carregador Portátil 20000mAh", descricao: "USB-C, carrega 2 dispositivos.", preco: "R$ 89,90", 
+          imagens: ["https://down-br.img.susercontent.com/file/br-11134207-81z1k-mf04j3pg9tzbb1.webp","https://placehold.co/600x400/FFE0B5/FF5E00?text=Carregador+2","https://placehold.co/600x400/FFE0B5/FF5E00?text=Carregador+3"], 
+          link: "https://shopee.com.br/SEU_LINK_CARREGADOR", categoria: "eletronicos", loja: "shopee" },
+        { id: 9, nome: "Fone Bluetooth ANC", descricao: "Cancelamento de ruído.", preco: "R$ 199,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Fone+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Fone+2"], 
+          link: "https://amzn.to/SEU_LINK_FONE", categoria: "eletronicos", loja: "amazon" },
+
+        // --- ESPORTES ---
+        { id: 10, nome: "Camisa Dry Fit", descricao: "Leve, anti-suor.", preco: "R$ 49,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Dry+Fit+Azul","https://placehold.co/600x400/FFE0B5/FF5E00?text=Dry+Fit+Vermelha"], 
+          link: "https://mercadolivre.com.br/SEU_LINK_DRYFIT", categoria: "esportes", loja: "mercadolivre" },
+        { id: 11, nome: "Caneleira de Peso 2kg", descricao: "Par ajustável.", preco: "R$ 35,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Caneleira+2kg","https://placehold.co/600x400/FFE0B5/FF5E00?text=Caneleira+uso"], 
+          link: "https://amzn.to/SEU_LINK_CANELEIRA", categoria: "esportes", loja: "amazon" },
+
+        // --- MODA FEMININA ---
+        { id: 12, nome: "Vestido Longo Floral", descricao: "Leve, festas e eventos.", preco: "R$ 139,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Vestido+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Vestido+2"], 
+          link: "https://amzn.to/SEU_LINK_VESTIDO", categoria: "moda-feminina", loja: "amazon" },
+        { id: 13, nome: "Sandália Salto Bloqueado", descricao: "Conforto e estilo.", preco: "R$ 89,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Sandalia+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Sandalia+2"], 
+          link: "https://shopee.com.br/SEU_LINK_SANDALIA", categoria: "moda-feminina", loja: "shopee" },
+
+        // --- MODA INFANTIL ---
+        { id: 14, nome: "Conjunto Baby Menina", descricao: "Macacão com laço.", preco: "R$ 49,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Baby+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Baby+2"], 
+          link: "https://shopee.com.br/SEU_LINK_BABY", categoria: "moda-infantil", loja: "shopee" },
+        { id: 15, nome: "Camiseta Estampada", descricao: "Personagens, tam 2 a 10.", preco: "R$ 29,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Camiseta+Inf+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Camiseta+Inf+2"], 
+          link: "https://amzn.to/SEU_LINK_CAMISETA_INF", categoria: "moda-infantil", loja: "amazon" },
+
+        // --- MODA MASCULINA ---
+        { id: 16, nome: "Camisa Polo Básica", descricao: "Algodão, confortável.", preco: "R$ 59,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Polo+Azul","https://placehold.co/600x400/FFE0B5/FF5E00?text=Polo+Verde"], 
+          link: "https://mercadolivre.com.br/SEU_LINK_POLO", categoria: "moda-masculina", loja: "mercadolivre" },
+        { id: 17, nome: "Tênis Casual Couro", descricao: "Solado antiderrapante.", preco: "R$ 159,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Tenis+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Tenis+2"], 
+          link: "https://amzn.to/SEU_LINK_TENIS_MASC", categoria: "moda-masculina", loja: "amazon" },
+
+        // --- MOTO ---
+        { id: 18, nome: "Capacete Fechado", descricao: "Viseira anti-risco.", preco: "R$ 199,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Capacete+Preto","https://placehold.co/600x400/FFE0B5/FF5E00?text=Capacete+Branco"], 
+          link: "https://amzn.to/SEU_LINK_CAPACETE", categoria: "moto", loja: "amazon" },
+        { id: 19, nome: "Suporte para Moto", descricao: "Fixação no guidão.", preco: "R$ 39,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Suporte+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Suporte+2"], 
+          link: "https://mercadolivre.com.br/SEU_LINK_SUPORTE", categoria: "moto", loja: "mercadolivre" },
+
+        // --- SEU NEGÓCIO (nova categoria) ---
+        { id: 20, nome: "Kit Canetas Personalizadas", descricao: "10 canetas esferográficas com estojo, ideal para brindes corporativos.", preco: "R$ 39,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Canetas+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Canetas+2"], 
+          link: "https://amzn.to/SEU_LINK_CANETAS", categoria: "negocio", loja: "amazon" },
+        { id: 21, nome: "Planner Executivo 2025", descricao: "Capa dura, planejamento semanal, metas e finanças.", preco: "R$ 49,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Planner+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Planner+2"], 
+          link: "https://shopee.com.br/SEU_LINK_PLANNER", categoria: "negocio", loja: "shopee" },
+        { id: 22, nome: "Quadro Branco Magnético", descricao: "60x90cm, com marcadores e imãs, para escritório.", preco: "R$ 129,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Quadro+Branco","https://placehold.co/600x400/FFE0B5/FF5E00?text=Quadro+Uso"], 
+          link: "https://mercadolivre.com.br/SEU_LINK_QUADRO", categoria: "negocio", loja: "mercadolivre" },
+
+        // --- PESCA & AVENTURA ---
+        { id: 23, nome: "Kit de Pesca Iniciante", descricao: "Vara + molinete + acessórios.", preco: "R$ 89,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Kit+Pesca+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Kit+Pesca+2"], 
+          link: "https://amzn.to/SEU_LINK_PESCA", categoria: "pesca", loja: "amazon" },
+        { id: 24, nome: "Mochila Tática Aventura", descricao: "40L, resistente à água.", preco: "R$ 129,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Mochila+Verde","https://placehold.co/600x400/FFE0B5/FF5E00?text=Mochila+Preta"], 
+          link: "https://shopee.com.br/SEU_LINK_MOCHILA", categoria: "pesca", loja: "shopee" },
+
+        // --- PET (nova categoria) ---
+        { id: 25, nome: "Ração Premium para Cães", descricao: "15kg, sabor frango e arroz, sem corantes.", preco: "R$ 159,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Racao+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Racao+2"], 
+          link: "https://amzn.to/SEU_LINK_RACAO", categoria: "pet", loja: "amazon" },
+        { id: 26, nome: "Cama Confortável para Pets", descricao: "Almofada macia, antialérgica, tamanho G.", preco: "R$ 79,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Cama+Pet+1","https://placehold.co/600x400/FFE0B5/FF5E00?text=Cama+Pet+2"], 
+          link: "https://shopee.com.br/SEU_LINK_CAMA", categoria: "pet", loja: "shopee" },
+        { id: 27, nome: "Brinquedo Interativo Pet", descricao: "Bola com petisco, estimula a mente do animal.", preco: "R$ 29,90", 
+          imagens: ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Brinquedo+Pet","https://placehold.co/600x400/FFE0B5/FF5E00?text=Brinquedo+Uso"], 
+          link: "https://mercadolivre.com.br/SEU_LINK_BRINQUEDO", categoria: "pet", loja: "mercadolivre" }
     ];
 
     function getStoreBadge(loja) {
@@ -454,17 +440,14 @@
         }
     }
 
-    // Variáveis de filtro
+    // Funções do carrossel (mesmo código anterior)
     let categoriaAtiva = "todos";
     let termoBusca = "";
     const container = document.getElementById("productsContainer");
     const searchInput = document.getElementById("searchInput");
 
-    // Função para criar um carrossel dinâmico para um produto
     function criarCarrossel(produtoId, imagens) {
-        // Cria um container único para cada carrossel
         const containerId = `carousel-${produtoId}`;
-        // Retorna o HTML e o script de inicialização será feito depois no DOM
         let dotsHtml = '';
         if (imagens.length > 1) {
             for (let i = 0; i < imagens.length; i++) {
@@ -476,8 +459,7 @@
                 <img src="${img}" alt="Foto ${idx+1}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Erro+imagem'">
             </div>
         `).join('');
-
-        const carouselHtml = `
+        return `
             <div class="carousel-container" id="${containerId}">
                 <div class="carousel-slides" style="transform: translateX(0%);">
                     ${slidesHtml}
@@ -489,49 +471,36 @@
                 ` : ''}
             </div>
         `;
-        return carouselHtml;
     }
 
-    // Após renderizar os cards, ativar os carrosséis
     function ativarCarrossel(produtoId, imagens) {
-        const container = document.getElementById(`carousel-${produtoId}`);
-        if (!container || imagens.length <= 1) return;
-        const slidesDiv = container.querySelector('.carousel-slides');
-        const prevBtn = container.querySelector('.btn-prev');
-        const nextBtn = container.querySelector('.btn-next');
-        const dots = container.querySelectorAll('.dot');
+        const containerEl = document.getElementById(`carousel-${produtoId}`);
+        if (!containerEl || imagens.length <= 1) return;
+        const slidesDiv = containerEl.querySelector('.carousel-slides');
+        const prevBtn = containerEl.querySelector('.btn-prev');
+        const nextBtn = containerEl.querySelector('.btn-next');
+        const dots = containerEl.querySelectorAll('.dot');
         let currentIndex = 0;
         const totalSlides = imagens.length;
-
         function updateCarousel(index) {
             if (index < 0) index = 0;
             if (index >= totalSlides) index = totalSlides - 1;
             currentIndex = index;
-            const percent = - (currentIndex * 100);
-            slidesDiv.style.transform = `translateX(${percent}%)`;
+            slidesDiv.style.transform = `translateX(-${currentIndex * 100}%)`;
             dots.forEach((dot, i) => {
                 if (i === currentIndex) dot.classList.add('active');
                 else dot.classList.remove('active');
             });
         }
-
         function nextSlide() { updateCarousel(currentIndex + 1); }
         function prevSlide() { updateCarousel(currentIndex - 1); }
-
         if (prevBtn) prevBtn.addEventListener('click', prevSlide);
         if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-        dots.forEach((dot, idx) => {
-            dot.addEventListener('click', () => updateCarousel(idx));
-        });
-
-        // Swipe (toque) para mobile
+        dots.forEach((dot, idx) => dot.addEventListener('click', () => updateCarousel(idx)));
         let touchStartX = 0;
-        let touchEndX = 0;
-        container.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        container.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
+        containerEl.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        containerEl.addEventListener('touchend', (e) => {
+            let touchEndX = e.changedTouches[0].screenX;
             if (touchEndX < touchStartX - 30) nextSlide();
             if (touchEndX > touchStartX + 30) prevSlide();
         });
@@ -566,11 +535,8 @@
             `;
         }
         container.innerHTML = html;
-        // Ativar carrosséis após inserir no DOM
         for (let p of filtrados) {
-            if (p.imagens.length > 1) {
-                ativarCarrossel(p.id, p.imagens);
-            }
+            if (p.imagens.length > 1) ativarCarrossel(p.id, p.imagens);
         }
     }
 
