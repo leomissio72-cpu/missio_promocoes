@@ -311,6 +311,7 @@
         <button class="cat-btn" data-cat="cosmeticos">💄 Cosméticos</button>
         <button class="cat-btn" data-cat="eletronicos">📱 Eletrônicos</button>
         <button class="cat-btn" data-cat="esportes">⚽ Esportes</button>
+        <button class="cat-btn" data-cat="livros">📚 Livros</button>
         <button class="cat-btn" data-cat="moda-feminina">👗 Moda Feminina</button>
         <button class="cat-btn" data-cat="moda-infantil">🧸 Moda Infantil</button>
         <button class="cat-btn" data-cat="moda-masculina">👔 Moda Masculina</button>
@@ -330,7 +331,7 @@
 
 <script>
     // ============================================================
-    // API DO SHEETDB (SUA URL JÁ ESTÁ AQUI!)
+    // API DO SHEETDB
     // ============================================================
     const API_URL = 'https://sheetdb.io/api/v1/b8497l310h84g';
 
@@ -340,7 +341,6 @@
     const container = document.getElementById("productsContainer");
     const searchInput = document.getElementById("searchInput");
 
-    // Mapeamento das lojas para os selos
     function getStoreBadge(loja) {
         const lojaLower = (loja || "").toLowerCase();
         const icons = { amazon: "🛒", mercadolivre: "🟡", shopee: "🛍️", "mercado live": "🟡" };
@@ -454,10 +454,12 @@
             const badge = getStoreBadge(p.loja);
             const imagens = [p.imagens_1, p.imagens_2, p.imagens_3].filter(img => img && img.trim() !== "");
             
-            // Formata o preço
             let precoFormatado = p.preco;
             if (precoFormatado && !precoFormatado.includes('R$')) {
-                precoFormatado = `R$ ${parseFloat(precoFormatado).toFixed(2).replace('.', ',')}`;
+                const precoNum = parseFloat(precoFormatado.toString().replace(',', '.'));
+                if (!isNaN(precoNum)) {
+                    precoFormatado = `R$ ${precoNum.toFixed(2).replace('.', ',')}`;
+                }
             }
             
             html += `
@@ -491,7 +493,6 @@
             if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
             const dados = await resposta.json();
             
-            // Filtra apenas produtos com nome e link
             produtos = dados.filter(item => item.nome && item.nome.trim() !== "" && item.link && item.link.trim() !== "");
             
             if (produtos.length === 0) {
