@@ -28,12 +28,18 @@
             padding: 16px 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-        .logo-img {
-            max-width: 160px;
-            width: 100%;
-            height: auto;
-            margin: 0 auto 8px;
-            display: block;
+        .logo-area {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #FF5E00, #FF8C40);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 40px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(255,94,0,0.3);
         }
         .slogan {
             font-size: 0.9rem;
@@ -82,7 +88,7 @@
         }
         .categories {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             overflow-x: auto;
             padding-bottom: 16px;
             margin-bottom: 24px;
@@ -91,7 +97,7 @@
         .cat-btn {
             background: white;
             border: 1px solid #e2e8f0;
-            padding: 8px 20px;
+            padding: 8px 18px;
             border-radius: 48px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -106,6 +112,10 @@
             color: white;
             box-shadow: 0 4px 12px rgba(255,94,0,0.3);
         }
+        .cat-btn:hover {
+            transform: translateY(-2px);
+            border-color: #FF8C40;
+        }
         .products-grid {
             display: flex;
             flex-direction: column;
@@ -113,13 +123,14 @@
         }
         .product-card {
             background: white;
-            border-radius: 32px;
+            border-radius: 28px;
             overflow: hidden;
             box-shadow: 0 12px 24px -8px rgba(0,0,0,0.12);
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
         .product-card:hover {
             transform: translateY(-6px);
+            box-shadow: 0 20px 32px -12px rgba(0,0,0,0.2);
         }
         .carousel-container {
             position: relative;
@@ -160,7 +171,12 @@
             justify-content: center;
             cursor: pointer;
             font-size: 1.2rem;
+            font-weight: bold;
             z-index: 10;
+            transition: background 0.2s;
+        }
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.8);
         }
         .btn-prev { left: 10px; }
         .btn-next { right: 10px; }
@@ -179,6 +195,8 @@
             height: 8px;
             border-radius: 50%;
             background: rgba(255,255,255,0.6);
+            transition: all 0.2s;
+            cursor: pointer;
         }
         .dot.active {
             background: #FF5E00;
@@ -203,7 +221,7 @@
             padding: 18px;
         }
         .product-title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: 8px;
             color: #1e293b;
@@ -213,12 +231,17 @@
             color: #475569;
             line-height: 1.45;
             margin-bottom: 12px;
+            white-space: pre-line;
         }
         .price {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: #FF5E00;
             margin-bottom: 18px;
+        }
+        .price::before {
+            content: "💰 ";
+            font-size: 1.2rem;
         }
         .buy-btn {
             background: linear-gradient(95deg, #FF5E00 0%, #FF8C40 100%);
@@ -229,6 +252,12 @@
             font-weight: 700;
             text-decoration: none;
             display: block;
+            transition: all 0.2s;
+            box-shadow: 0 4px 8px rgba(255,94,0,0.25);
+        }
+        .buy-btn:hover {
+            background: linear-gradient(95deg, #e05200 0%, #ff7a2a 100%);
+            transform: scale(1.01);
         }
         .footer {
             text-align: center;
@@ -238,26 +267,33 @@
             padding: 16px;
             border-top: 1px solid #e9ecef;
         }
-        .empty-message {
-            text-align: center;
-            padding: 48px;
-            background: white;
-            border-radius: 48px;
-            color: #888;
-        }
         .loading {
             text-align: center;
             padding: 48px;
             background: white;
             border-radius: 48px;
             color: #FF5E00;
+            font-weight: 500;
+        }
+        .empty-message {
+            text-align: center;
+            padding: 48px;
+            background: white;
+            border-radius: 48px;
+            color: #888;
+            font-weight: 500;
+        }
+        @media (max-width: 480px) {
+            body { padding: 16px 12px 32px; }
+            .product-title { font-size: 1.1rem; }
+            .price { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <img src="logo-missi.png" alt="MISSI" class="logo-img" onerror="this.src='https://placehold.co/600x200/FF5E00/white?text=MISSI'">
+        <div class="logo-area">🛍️</div>
         <div class="slogan">✨ TUDO QUE VOCÊ PRECISA, EM UM SÓ LUGAR ✨</div>
         <div class="badge">🔗 Links de afiliado – você paga o mesmo preço</div>
     </div>
@@ -285,7 +321,7 @@
     </div>
 
     <div class="products-grid" id="productsContainer">
-        <div class="loading">📡 Carregando produtos da planilha...</div>
+        <div class="loading">📡 Carregando produtos...</div>
     </div>
     <div class="footer">
         🛒 Ao comprar por esses links, você ajuda o MISSI a crescer!
@@ -293,11 +329,10 @@
 </div>
 
 <script>
-    // ================================================
-    // SEU ID DA PLANILHA (já público)
-    // ================================================
-    const SPREADSHEET_ID = "14jrbm1nxh0jXtT46Hk6xOgyo_bVz6d0sbtMsBsIr4fY";
-    const SHEET_NAME = "Sheet1"; // Nome da aba (se for "Planilha1", mude para "Planilha1")
+    // ============================================================
+    // API DO SHEETDB (SUA URL JÁ ESTÁ AQUI!)
+    // ============================================================
+    const API_URL = 'https://sheetdb.io/api/v1/b8497l310h84g';
 
     let produtos = [];
     let categoriaAtiva = "todos";
@@ -305,18 +340,27 @@
     const container = document.getElementById("productsContainer");
     const searchInput = document.getElementById("searchInput");
 
-    // ========== UTILITÁRIOS ==========
+    // Mapeamento das lojas para os selos
     function getStoreBadge(loja) {
-        const icons = { amazon: "🛒", mercadolivre: "🟡", shopee: "🛍️" };
-        switch(loja) {
-            case 'amazon': return { nome: "Amazon", classe: "amazon", icon: icons.amazon };
-            case 'mercadolivre': return { nome: "Mercado Livre", classe: "mercadolivre", icon: icons.mercadolivre };
-            case 'shopee': return { nome: "Shopee", classe: "shopee", icon: icons.shopee };
-            default: return { nome: loja || "Loja", classe: "", icon: "🏷️" };
+        const lojaLower = (loja || "").toLowerCase();
+        const icons = { amazon: "🛒", mercadolivre: "🟡", shopee: "🛍️", "mercado live": "🟡" };
+        
+        if (lojaLower === "amazon" || lojaLower === "amazon br") {
+            return { nome: "Amazon", classe: "amazon", icon: icons.amazon };
         }
+        if (lojaLower === "mercadolivre" || lojaLower === "mercado livre" || lojaLower === "mercado live") {
+            return { nome: "Mercado Livre", classe: "mercadolivre", icon: icons.mercadolivre };
+        }
+        if (lojaLower === "shopee") {
+            return { nome: "Shopee", classe: "shopee", icon: icons.shopee };
+        }
+        return { nome: loja || "Loja", classe: "", icon: "🏷️" };
     }
 
     function criarCarrossel(produtoId, imagens) {
+        if (!imagens || imagens.length === 0) {
+            imagens = ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Sem+imagem"];
+        }
         const containerId = `carousel-${produtoId}`;
         let dotsHtml = '';
         if (imagens.length > 1) {
@@ -326,7 +370,7 @@
         }
         const slidesHtml = imagens.map((img, idx) => `
             <div class="carousel-slide">
-                <img src="${img}" alt="Foto ${idx+1}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Erro'">
+                <img src="${img}" alt="Foto ${idx+1}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Erro+imagem'">
             </div>
         `).join('');
         return `
@@ -351,138 +395,113 @@
         const nextBtn = containerEl.querySelector('.btn-next');
         const dots = containerEl.querySelectorAll('.dot');
         let currentIndex = 0;
-        const total = imagens.length;
-        function update(i) {
-            if (i < 0) i = 0;
-            if (i >= total) i = total - 1;
-            currentIndex = i;
+        const totalSlides = imagens.length;
+        
+        function updateCarousel(index) {
+            if (index < 0) index = 0;
+            if (index >= totalSlides) index = totalSlides - 1;
+            currentIndex = index;
             slidesDiv.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentIndex));
+            dots.forEach((dot, i) => {
+                if (i === currentIndex) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
         }
-        function next() { update(currentIndex + 1); }
-        function prev() { update(currentIndex - 1); }
-        if (prevBtn) prevBtn.addEventListener('click', prev);
-        if (nextBtn) nextBtn.addEventListener('click', next);
-        dots.forEach((dot, idx) => dot.addEventListener('click', () => update(idx)));
-        let startX = 0;
-        containerEl.addEventListener('touchstart', e => { startX = e.changedTouches[0].screenX; }, { passive: true });
-        containerEl.addEventListener('touchend', e => {
-            const endX = e.changedTouches[0].screenX;
-            if (endX < startX - 30) next();
-            if (endX > startX + 30) prev();
+        
+        function nextSlide() { updateCarousel(currentIndex + 1); }
+        function prevSlide() { updateCarousel(currentIndex - 1); }
+        
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+        dots.forEach((dot, idx) => dot.addEventListener('click', () => updateCarousel(idx)));
+        
+        let touchStartX = 0;
+        containerEl.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        containerEl.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            if (touchEndX < touchStartX - 30) nextSlide();
+            if (touchEndX > touchStartX + 30) prevSlide();
         });
     }
 
     function renderizarProdutos() {
         let filtrados = [...produtos];
+        
         if (categoriaAtiva !== "todos") {
-            filtrados = filtrados.filter(p => p.categoria === categoriaAtiva);
+            filtrados = filtrados.filter(p => {
+                const catProduto = (p.categoria || "").toLowerCase();
+                return catProduto === categoriaAtiva.toLowerCase();
+            });
         }
+        
         if (termoBusca.trim() !== "") {
             const busca = termoBusca.toLowerCase();
-            filtrados = filtrados.filter(p => p.nome.toLowerCase().includes(busca) || p.descricao.toLowerCase().includes(busca));
+            filtrados = filtrados.filter(p => 
+                (p.nome || "").toLowerCase().includes(busca) || 
+                (p.descricao || "").toLowerCase().includes(busca)
+            );
         }
+        
         if (filtrados.length === 0) {
             container.innerHTML = `<div class="empty-message">😕 Nenhum produto encontrado.</div>`;
             return;
         }
+        
         let html = "";
         for (let p of filtrados) {
             const badge = getStoreBadge(p.loja);
-            const carrosselHtml = criarCarrossel(p.id, p.imagens);
+            const imagens = [p.imagens_1, p.imagens_2, p.imagens_3].filter(img => img && img.trim() !== "");
+            
+            // Formata o preço
+            let precoFormatado = p.preco;
+            if (precoFormatado && !precoFormatado.includes('R$')) {
+                precoFormatado = `R$ ${parseFloat(precoFormatado).toFixed(2).replace('.', ',')}`;
+            }
+            
             html += `
                 <div class="product-card">
-                    ${carrosselHtml}
+                    ${criarCarrossel(p.id || Math.random(), imagens)}
                     <div class="product-info">
                         <span class="store-badge ${badge.classe}">${badge.icon} ${badge.nome}</span>
-                        <div class="product-title">${p.nome}</div>
-                        <div class="product-desc">${p.descricao}</div>
-                        <div class="price">${p.preco}</div>
-                        <a href="${p.link}" target="_blank" rel="noopener noreferrer nofollow" class="buy-btn">👉 COMPRAR AGORA</a>
+                        <div class="product-title">${p.nome || "Produto"}</div>
+                        <div class="product-desc">${(p.descricao || "Sem descrição").substring(0, 150)}${(p.descricao || "").length > 150 ? '...' : ''}</div>
+                        <div class="price">${precoFormatado || "R$ 0,00"}</div>
+                        <a href="${p.link || "#"}" target="_blank" rel="noopener noreferrer nofollow" class="buy-btn">👉 COMPRAR AGORA</a>
                     </div>
                 </div>
             `;
         }
+        
         container.innerHTML = html;
+        
         for (let p of filtrados) {
-            if (p.imagens.length > 1) ativarCarrossel(p.id, p.imagens);
+            const imagens = [p.imagens_1, p.imagens_2, p.imagens_3].filter(img => img && img.trim() !== "");
+            if (imagens.length > 1) {
+                ativarCarrossel(p.id || Math.random(), imagens);
+            }
         }
     }
 
-    // ========== LEITURA DIRETA DA PLANILHA GOOGLE ==========
-    async function carregarPlanilha() {
+    async function carregarProdutos() {
         try {
-            container.innerHTML = `<div class="loading">📡 Lendo planilha do Google...</div>`;
+            container.innerHTML = `<div class="loading">📡 Carregando produtos...</div>`;
+            const resposta = await fetch(API_URL);
+            if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
+            const dados = await resposta.json();
             
-            // URL mágica que retorna os dados da planilha em formato JSON (público)
-            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
-            
-            const response = await fetch(url);
-            const texto = await response.text();
-            
-            // O retorno é algo como: google.visualization.Query.setResponse({...})
-            // Precisamos extrair o JSON puro
-            const jsonStr = texto.substring(texto.indexOf('{'), texto.lastIndexOf('}') + 1);
-            const dados = JSON.parse(jsonStr);
-            
-            const rows = dados.table.rows;
-            const cols = dados.table.cols;
-            
-            // Mapeia os índices das colunas pelos rótulos (primeira linha)
-            const colIndex = {};
-            cols.forEach((col, idx) => {
-                colIndex[col.label] = idx;
-            });
-            
-            // Converte cada linha em produto
-            const produtosRaw = [];
-            for (let row of rows) {
-                if (row.c && row.c.length > 0) {
-                    const produto = {
-                        id: row.c[colIndex['id']]?.v || '',
-                        nome: row.c[colIndex['nome']]?.v || '',
-                        descricao: row.c[colIndex['descricao']]?.v || '',
-                        preco: row.c[colIndex['preco']]?.v || '',
-                        imagens_1: row.c[colIndex['imagens_1']]?.v || '',
-                        imagens_2: row.c[colIndex['imagens_2']]?.v || '',
-                        imagens_3: row.c[colIndex['imagens_3']]?.v || '',
-                        link: row.c[colIndex['link']]?.v || '',
-                        categoria: row.c[colIndex['categoria']]?.v || '',
-                        loja: row.c[colIndex['loja']]?.v || ''
-                    };
-                    // Só adiciona se tiver pelo menos nome e link
-                    if (produto.nome && produto.link) {
-                        produtosRaw.push(produto);
-                    }
-                }
-            }
-            
-            // Transforma para o formato do site (array de imagens)
-            produtos = produtosRaw.map(p => ({
-                id: p.id || Math.random(),
-                nome: p.nome,
-                descricao: p.descricao,
-                preco: p.preco,
-                imagens: [p.imagens_1, p.imagens_2, p.imagens_3].filter(img => img && img.trim() !== ''),
-                link: p.link,
-                categoria: p.categoria,
-                loja: p.loja
-            }));
+            // Filtra apenas produtos com nome e link
+            produtos = dados.filter(item => item.nome && item.nome.trim() !== "" && item.link && item.link.trim() !== "");
             
             if (produtos.length === 0) {
-                container.innerHTML = `<div class="empty-message">📭 Nenhum produto encontrado na planilha. Preencha os dados e tente novamente.</div>`;
+                container.innerHTML = `<div class="empty-message">📭 Nenhum produto encontrado.<br><br>Verifique os cabeçalhos da planilha.</div>`;
             } else {
                 renderizarProdutos();
             }
         } catch (erro) {
-            console.error("Erro ao carregar planilha:", erro);
-            container.innerHTML = `
-                <div class="empty-message">
-                    ❌ Não foi possível carregar a planilha.<br><br>
-                    <strong>Verifique se a planilha está pública</strong> (Arquivo > Compartilhar > Qualquer pessoa com o link).<br>
-                    Também confira se o nome da aba está correto (padrão "Sheet1").
-                </div>
-            `;
+            console.error("Erro:", erro);
+            container.innerHTML = `<div class="empty-message">❌ Erro ao carregar produtos.<br><br>Verifique a conexão com a API.</div>`;
         }
     }
 
@@ -496,14 +515,20 @@
             });
         });
     }
+
     function setupBusca() {
-        searchInput.addEventListener("input", e => { termoBusca = e.target.value; renderizarProdutos(); });
+        searchInput.addEventListener("input", e => { 
+            termoBusca = e.target.value; 
+            renderizarProdutos(); 
+        });
     }
+
     function init() {
         setupCategorias();
         setupBusca();
-        carregarPlanilha();
+        carregarProdutos();
     }
+    
     init();
 </script>
 </body>
