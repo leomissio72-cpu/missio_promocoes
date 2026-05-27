@@ -1,64 +1,355 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Profissional - Power BI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Minha Loja de Afiliados</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
+
+        body {
+            background-color: #f5f7fb;
+            padding: 20px 16px 40px;
         }
+
         .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
         }
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            border-radius: 8px;
-        }
-        footer {
+
+        .header {
             text-align: center;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
+            margin-bottom: 24px;
         }
-        @media (max-width: 768px) {
-            iframe {
-                height: 400px;
-            }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #FF9900, #FF5E00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 40px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            margin-bottom: 4px;
+        }
+
+        .bio {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            background: #FFE8E0;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 48px;
+            border: 1px solid #ddd;
+            background-color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        #searchInput:focus {
+            border-color: #FF5E00;
+            box-shadow: 0 0 0 2px rgba(255,94,0,0.2);
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            scrollbar-width: thin;
+        }
+
+        .cat-btn {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .cat-btn.active {
+            background: #FF5E00;
+            border-color: #FF5E00;
+            color: white;
+        }
+
+        .products-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+
+        .product-info {
+            padding: 16px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #FF5E00;
+            margin-bottom: 14px;
+        }
+
+        .buy-btn {
+            background: #FF5E00;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 48px;
+            font-weight: 600;
+            text-decoration: none;
+            display: block;
+            transition: background 0.2s;
+        }
+
+        .buy-btn:hover {
+            background: #e04e00;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 24px;
+            color: #888;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Dashboard de Visualização de Dados</h1>
-        <p>Ferramenta gratuita para análise e visualização profissional</p>
-    </header>
-    <div class="container">
-        <h2>Relatório Power BI</h2>
-        <iframe src="https://app.powerbi.com/view?r=eyJrIjoiYzNmZjEyOTAtMDJhMi00MGM2LTgzOGMtMWE1NGM0MjUyZTM3IiwidCI6Ijc0MmYyNGViLWYyOWMtNDQwMS04NGU1LTYxN2Q3MzQ0YjViNyJ9" allowfullscreen></iframe>
+<div class="container">
+    <div class="header">
+        <div class="avatar">🛍️</div>
+        <h1>@seu_instagram</h1>
+        <div class="bio">💸 Ofertas incríveis | Amazon • Mercado Livre • Shopee</div>
+        <div class="badge">🔗 Links de afiliado – você paga o mesmo preço</div>
     </div>
-    <footer>
-        <p>&copy; 2026 - Plataforma Gratuita de Visualização</p>
-    </footer>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 Buscar produto (ex: fone, teclado, capa...)">
+    </div>
+
+    <div class="categories" id="categoryFilter">
+        <button class="cat-btn active" data-cat="todos">Todos</button>
+        <button class="cat-btn" data-cat="amazon">Amazon</button>
+        <button class="cat-btn" data-cat="mercadolivre">Mercado Livre</button>
+        <button class="cat-btn" data-cat="shopee">Shopee</button>
+    </div>
+
+    <div class="products-grid" id="productsContainer"></div>
+
+    <div class="footer">
+        🛒 Ao comprar por esses links, você me ajuda a continuar trazendo ofertas!
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // 🖼️ COMO TROCAR AS IMAGENS DOS PRODUTOS:
+    //    - Cada produto tem um campo "imagem".
+    //    - Basta colar a URL da sua imagem entre as aspas.
+    //    - Exemplo real: "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mf04j3pg9tzbb1.webp"
+    //
+    // 🔗 COMO TROCAR O LINK DE AFILIADO:
+    //    - No campo "link", cole o link da Amazon, Mercado Livre ou Shopee.
+    //
+    // ➕ COMO ADICIONAR UM NOVO PRODUTO:
+    //    - Copie o bloco { ... } de um produto, cole dentro do array e ajuste os valores.
+    // ============================================================
+
+    const produtos = [
+        {
+            id: 1,
+            nome: "Produto Exemplo Shopee",
+            descricao: "Este é um produto incrível que você encontra na Shopee. Aproveite a oferta!",
+            preco: "R$ 49,90",
+            imagem: "https://down-br.img.susercontent.com/file/br-11134207-81z1k-mf04j3pg9tzbb1.webp", // 👈 SUA IMAGEM AQUI
+            link: "https://shopee.com.br/SEU_LINK_DE_AFILIADO_AQUI", // 👈 COLE SEU LINK DA SHOPEE
+            categoria: "shopee"
+        },
+        {
+            id: 2,
+            nome: "Fone de Ouvido Bluetooth",
+            descricao: "Som incrível, bateria de 20h, compatível com iOS e Android.",
+            preco: "R$ 79,90",
+            imagem: "https://placehold.co/600x400/FFE0B5/FF5E00?text=Fone+Bluetooth", // 👈 Troque pela URL da sua imagem
+            link: "https://amzn.to/SEU_LINK_AQUI",
+            categoria: "amazon"
+        },
+        {
+            id: 3,
+            nome: "Smartwatch Esportivo",
+            descricao: "Monitora batimentos, passos, calorias. Resistente à água.",
+            preco: "R$ 149,90",
+            imagem: "https://placehold.co/600x400/FFE0B5/FF5E00?text=Smartwatch",
+            link: "https://mercadolivre.com.br/SEU_LINK_AQUI",
+            categoria: "mercadolivre"
+        },
+        {
+            id: 4,
+            nome: "Kit Teclado e Mouse Gamer",
+            descricao: "RGB, teclado mecânico, mouse 6400 DPI. Excelente custo-benefício.",
+            preco: "R$ 129,99",
+            imagem: "https://placehold.co/600x400/FFE0B5/FF5E00?text=Kit+Gamer",
+            link: "https://shopee.com.br/SEU_LINK_AQUI",
+            categoria: "shopee"
+        },
+        {
+            id: 5,
+            nome: "Echo Dot 5ª Geração",
+            descricao: "Controle sua casa com Alexa, som potente e design moderno.",
+            preco: "R$ 299,00",
+            imagem: "https://placehold.co/600x400/FFE0B5/FF5E00?text=Echo+Dot",
+            link: "https://amzn.to/OUTRO_LINK_AMAZON",
+            categoria: "amazon"
+        }
+    ];
+
+    let categoriaAtiva = "todos";
+    let termoBusca = "";
+
+    const productsContainer = document.getElementById("productsContainer");
+    const searchInput = document.getElementById("searchInput");
+
+    function renderizarProdutos() {
+        let produtosFiltrados = [];
+        if (categoriaAtiva === "todos") {
+            produtosFiltrados = [...produtos];
+        } else {
+            produtosFiltrados = produtos.filter(p => p.categoria === categoriaAtiva);
+        }
+
+        if (termoBusca.trim() !== "") {
+            const buscaLower = termoBusca.toLowerCase();
+            produtosFiltrados = produtosFiltrados.filter(p => 
+                p.nome.toLowerCase().includes(buscaLower) || 
+                p.descricao.toLowerCase().includes(buscaLower)
+            );
+        }
+
+        if (produtosFiltrados.length === 0) {
+            productsContainer.innerHTML = `<div class="empty-message">😕 Nenhum produto encontrado com essa busca ou categoria.</div>`;
+            return;
+        }
+
+        let html = "";
+        for (let prod of produtosFiltrados) {
+            html += `
+                <div class="product-card">
+                    <img class="product-img" src="${prod.imagem}" alt="${prod.nome}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Imagem+indisponivel'">
+                    <div class="product-info">
+                        <div class="product-title">${prod.nome}</div>
+                        <div class="product-desc">${prod.descricao}</div>
+                        <div class="price">${prod.preco}</div>
+                        <a href="${prod.link}" target="_blank" rel="noopener noreferrer nofollow" class="buy-btn">👉 Comprar agora</a>
+                    </div>
+                </div>
+            `;
+        }
+        productsContainer.innerHTML = html;
+    }
+
+    function setupCategorias() {
+        const botoes = document.querySelectorAll(".cat-btn");
+        botoes.forEach(botao => {
+            botao.addEventListener("click", function() {
+                botoes.forEach(btn => btn.classList.remove("active"));
+                this.classList.add("active");
+                categoriaAtiva = this.getAttribute("data-cat");
+                renderizarProdutos();
+            });
+        });
+    }
+
+    function setupBusca() {
+        if (searchInput) {
+            searchInput.addEventListener("input", function(e) {
+                termoBusca = e.target.value;
+                renderizarProdutos();
+            });
+        }
+    }
+
+    function init() {
+        renderizarProdutos();
+        setupCategorias();
+        setupBusca();
+    }
+
+    init();
+</script>
 </body>
 </html>
