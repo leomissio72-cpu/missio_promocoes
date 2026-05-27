@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>MISSIO_PROMOÇÕES - Tudo que você precisa</title>
+    <title>MISSI - Tudo que você precisa</title>
     <style>
         * {
             margin: 0;
@@ -86,12 +86,24 @@
             font-size: 1.2rem;
             pointer-events: none;
         }
+        /* Filtros de categoria */
+        .filter-section {
+            margin-bottom: 24px;
+        }
+        .filter-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
         .categories {
             display: flex;
             gap: 10px;
             overflow-x: auto;
-            padding-bottom: 16px;
-            margin-bottom: 24px;
+            padding-bottom: 12px;
             scrollbar-width: thin;
         }
         .cat-btn {
@@ -112,10 +124,32 @@
             color: white;
             box-shadow: 0 4px 12px rgba(255,94,0,0.3);
         }
-        .cat-btn:hover {
-            transform: translateY(-2px);
-            border-color: #FF8C40;
+        .store-filters {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 12px;
         }
+        .store-btn {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 6px 16px;
+            border-radius: 48px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            color: #334155;
+        }
+        .store-btn.active {
+            background: #1e293b;
+            border-color: #1e293b;
+            color: white;
+        }
+        .store-btn.amazon.active { background: #FF9900; border-color: #FF9900; color: #232F3E; }
+        .store-btn.mercadolivre.active { background: #FFE600; border-color: #FFE600; color: #1a1a1a; }
+        .store-btn.shopee.active { background: #EE4D2D; border-color: #EE4D2D; color: white; }
         .products-grid {
             display: flex;
             flex-direction: column;
@@ -303,22 +337,38 @@
         <input type="text" id="searchInput" placeholder="Buscar produto...">
     </div>
 
-    <div class="categories" id="categoryFilter">
-        <button class="cat-btn active" data-cat="todos">📦 Todos</button>
-        <button class="cat-btn" data-cat="bijuterias">💎 Bijuterias</button>
-        <button class="cat-btn" data-cat="carro">🚗 Carro</button>
-        <button class="cat-btn" data-cat="casa">🏠 Casa & Decoração</button>
-        <button class="cat-btn" data-cat="cosmeticos">💄 Cosméticos</button>
-        <button class="cat-btn" data-cat="eletronicos">📱 Eletrônicos</button>
-        <button class="cat-btn" data-cat="esportes">⚽ Esportes</button>
-        <button class="cat-btn" data-cat="livros">📚 Livros</button>
-        <button class="cat-btn" data-cat="moda-feminina">👗 Moda Feminina</button>
-        <button class="cat-btn" data-cat="moda-infantil">🧸 Moda Infantil</button>
-        <button class="cat-btn" data-cat="moda-masculina">👔 Moda Masculina</button>
-        <button class="cat-btn" data-cat="moto">🏍️ Moto</button>
-        <button class="cat-btn" data-cat="negocio">💼 Seu Negócio</button>
-        <button class="cat-btn" data-cat="pesca">🎣 Pesca & Aventura</button>
-        <button class="cat-btn" data-cat="pet">🐾 Pet</button>
+    <!-- Filtros por categoria -->
+    <div class="filter-section">
+        <div class="filter-title">📂 Categorias</div>
+        <div class="categories" id="categoryFilter">
+            <button class="cat-btn active" data-cat="todos">📦 Todos</button>
+            <button class="cat-btn" data-cat="bijuterias">💎 Bijuterias</button>
+            <button class="cat-btn" data-cat="carro">🚗 Carro</button>
+            <button class="cat-btn" data-cat="casa">🏠 Casa</button>
+            <button class="cat-btn" data-cat="cosmeticos">💄 Cosméticos</button>
+            <button class="cat-btn" data-cat="eletronicos">📱 Eletrônicos</button>
+            <button class="cat-btn" data-cat="esportes">⚽ Esportes</button>
+            <button class="cat-btn" data-cat="livros">📚 Livros</button>
+            <button class="cat-btn" data-cat="moda-feminina">👗 Moda Feminina</button>
+            <button class="cat-btn" data-cat="moda-infantil">🧸 Moda Infantil</button>
+            <button class="cat-btn" data-cat="moda-masculina">👔 Moda Masculina</button>
+            <button class="cat-btn" data-cat="moto">🏍️ Moto</button>
+            <button class="cat-btn" data-cat="negocio">💼 Negócio</button>
+            <button class="cat-btn" data-cat="pesca">🎣 Pesca</button>
+            <button class="cat-btn" data-cat="pet">🐾 Pet</button>
+            <button class="cat-btn" data-cat="suplementacao">💊 Suplementação</button>
+        </div>
+    </div>
+
+    <!-- Filtros por loja -->
+    <div class="filter-section">
+        <div class="filter-title">🏪 Lojas / Vitrines</div>
+        <div class="store-filters" id="storeFilter">
+            <button class="store-btn active" data-store="todas">🛒 Todas as Lojas</button>
+            <button class="store-btn" data-store="amazon">🛒 Amazon</button>
+            <button class="store-btn" data-store="mercadolivre">🟡 Mercado Livre</button>
+            <button class="store-btn" data-store="shopee">🛍️ Shopee</button>
+        </div>
     </div>
 
     <div class="products-grid" id="productsContainer">
@@ -331,28 +381,27 @@
 
 <script>
     // ============================================================
-    // API DO SHEETDB
+    // API DO SHEETDB (SUA URL)
     // ============================================================
     const API_URL = 'https://sheetdb.io/api/v1/b8497l310h84g';
 
     let produtos = [];
     let categoriaAtiva = "todos";
+    let lojaAtiva = "todas";
     let termoBusca = "";
     const container = document.getElementById("productsContainer");
     const searchInput = document.getElementById("searchInput");
 
     function getStoreBadge(loja) {
         const lojaLower = (loja || "").toLowerCase();
-        const icons = { amazon: "🛒", mercadolivre: "🟡", shopee: "🛍️", "mercado live": "🟡" };
-        
         if (lojaLower === "amazon" || lojaLower === "amazon br") {
-            return { nome: "Amazon", classe: "amazon", icon: icons.amazon };
+            return { nome: "Amazon", classe: "amazon", icon: "🛒" };
         }
         if (lojaLower === "mercadolivre" || lojaLower === "mercado livre" || lojaLower === "mercado live") {
-            return { nome: "Mercado Livre", classe: "mercadolivre", icon: icons.mercadolivre };
+            return { nome: "Mercado Livre", classe: "mercadolivre", icon: "🟡" };
         }
         if (lojaLower === "shopee") {
-            return { nome: "Shopee", classe: "shopee", icon: icons.shopee };
+            return { nome: "Shopee", classe: "shopee", icon: "🛍️" };
         }
         return { nome: loja || "Loja", classe: "", icon: "🏷️" };
     }
@@ -370,7 +419,7 @@
         }
         const slidesHtml = imagens.map((img, idx) => `
             <div class="carousel-slide">
-                <img src="${img}" alt="Foto ${idx+1}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Erro+imagem'">
+                <img src="${img}" alt="Foto ${idx+1}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Erro'">
             </div>
         `).join('');
         return `
@@ -429,6 +478,7 @@
     function renderizarProdutos() {
         let filtrados = [...produtos];
         
+        // Filtro por categoria
         if (categoriaAtiva !== "todos") {
             filtrados = filtrados.filter(p => {
                 const catProduto = (p.categoria || "").toLowerCase();
@@ -436,6 +486,18 @@
             });
         }
         
+        // Filtro por loja
+        if (lojaAtiva !== "todas") {
+            filtrados = filtrados.filter(p => {
+                const lojaProduto = (p.loja || "").toLowerCase();
+                if (lojaAtiva === "amazon") return lojaProduto === "amazon" || lojaProduto === "amazon br";
+                if (lojaAtiva === "mercadolivre") return lojaProduto === "mercadolivre" || lojaProduto === "mercado livre" || lojaProduto === "mercado live";
+                if (lojaAtiva === "shopee") return lojaProduto === "shopee";
+                return false;
+            });
+        }
+        
+        // Busca textual
         if (termoBusca.trim() !== "") {
             const busca = termoBusca.toLowerCase();
             filtrados = filtrados.filter(p => 
@@ -506,12 +568,23 @@
         }
     }
 
-    function setupCategorias() {
-        document.querySelectorAll(".cat-btn").forEach(btn => {
+    function setupFiltros() {
+        // Filtros de categoria
+        document.querySelectorAll("#categoryFilter .cat-btn").forEach(btn => {
             btn.addEventListener("click", function() {
-                document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+                document.querySelectorAll("#categoryFilter .cat-btn").forEach(b => b.classList.remove("active"));
                 this.classList.add("active");
                 categoriaAtiva = this.getAttribute("data-cat");
+                renderizarProdutos();
+            });
+        });
+        
+        // Filtros de loja
+        document.querySelectorAll("#storeFilter .store-btn").forEach(btn => {
+            btn.addEventListener("click", function() {
+                document.querySelectorAll("#storeFilter .store-btn").forEach(b => b.classList.remove("active"));
+                this.classList.add("active");
+                lojaAtiva = this.getAttribute("data-store");
                 renderizarProdutos();
             });
         });
@@ -525,7 +598,7 @@
     }
 
     function init() {
-        setupCategorias();
+        setupFiltros();
         setupBusca();
         carregarProdutos();
     }
