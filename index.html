@@ -59,6 +59,37 @@
             margin-top: 8px;
             color: #FF5E00;
         }
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .contact-btn.instagram {
+            background: linear-gradient(45deg, #f09433, #d62976, #962fbf);
+            color: white;
+        }
+        .contact-btn.whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
         .search-box {
             margin-bottom: 24px;
             position: relative;
@@ -86,7 +117,6 @@
             font-size: 1.2rem;
             pointer-events: none;
         }
-        /* Filtros de categoria */
         .filter-section {
             margin-bottom: 24px;
         }
@@ -99,14 +129,14 @@
             align-items: center;
             gap: 8px;
         }
-        .categories {
+        .categories, .store-filters {
             display: flex;
             gap: 10px;
             overflow-x: auto;
             padding-bottom: 12px;
             scrollbar-width: thin;
         }
-        .cat-btn {
+        .cat-btn, .store-btn {
             background: white;
             border: 1px solid #e2e8f0;
             padding: 8px 18px;
@@ -118,34 +148,11 @@
             transition: all 0.2s;
             color: #334155;
         }
-        .cat-btn.active {
+        .cat-btn.active, .store-btn.active {
             background: #FF5E00;
             border-color: #FF5E00;
             color: white;
             box-shadow: 0 4px 12px rgba(255,94,0,0.3);
-        }
-        .store-filters {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 12px;
-        }
-        .store-btn {
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
-            padding: 6px 16px;
-            border-radius: 48px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-            color: #334155;
-        }
-        .store-btn.active {
-            background: #1e293b;
-            border-color: #1e293b;
-            color: white;
         }
         .store-btn.amazon.active { background: #FF9900; border-color: #FF9900; color: #232F3E; }
         .store-btn.mercadolivre.active { background: #FFE600; border-color: #FFE600; color: #1a1a1a; }
@@ -329,7 +336,12 @@
     <div class="header">
         <div class="logo-area">🛍️</div>
         <div class="slogan">✨ TUDO QUE VOCÊ PRECISA, EM UM SÓ LUGAR ✨</div>
-        <div class="badge">🔗 Links de afiliado – você paga o mesmo preço-fornecedores oficiais</div>
+        <div class="badge">🔗 Links de afiliado – você paga o mesmo preço - fornecedores oficiai</div>
+        
+        <div class="contact-buttons">
+            <a href="https://www.instagram.com/missio_promocoes/" target="_blank" class="contact-btn instagram">📷 Instagram</a>
+            <a href="https://wa.me/5511966456055?text=Olá! Não encontrei o produto que procurava no seu site. Pode me ajudar?" target="_blank" class="contact-btn whatsapp">💬 WhatsApp</a>
+        </div>
     </div>
 
     <div class="search-box">
@@ -337,7 +349,6 @@
         <input type="text" id="searchInput" placeholder="Buscar produto...">
     </div>
 
-    <!-- Filtros por categoria -->
     <div class="filter-section">
         <div class="filter-title">📂 Categorias</div>
         <div class="categories" id="categoryFilter">
@@ -360,7 +371,6 @@
         </div>
     </div>
 
-    <!-- Filtros por loja -->
     <div class="filter-section">
         <div class="filter-title">🏪 Lojas / Vitrines</div>
         <div class="store-filters" id="storeFilter">
@@ -380,9 +390,6 @@
 </div>
 
 <script>
-    // ============================================================
-    // API DO SHEETDB (SUA URL)
-    // ============================================================
     const API_URL = 'https://sheetdb.io/api/v1/b8497l310h84g';
 
     let produtos = [];
@@ -391,6 +398,16 @@
     let termoBusca = "";
     const container = document.getElementById("productsContainer");
     const searchInput = document.getElementById("searchInput");
+
+    // Função para atualizar a URL baseada nos filtros atuais (sem o parâmetro "busca")
+    function updateURL() {
+        const url = new URL(window.location);
+        if (categoriaAtiva === 'todos') url.searchParams.delete('categoria');
+        else url.searchParams.set('categoria', categoriaAtiva);
+        if (lojaAtiva === 'todas') url.searchParams.delete('loja');
+        else url.searchParams.set('loja', lojaAtiva);
+        window.history.pushState({}, '', url);
+    }
 
     function getStoreBadge(loja) {
         const lojaLower = (loja || "").toLowerCase();
@@ -478,7 +495,6 @@
     function renderizarProdutos() {
         let filtrados = [...produtos];
         
-        // Filtro por categoria
         if (categoriaAtiva !== "todos") {
             filtrados = filtrados.filter(p => {
                 const catProduto = (p.categoria || "").toLowerCase();
@@ -486,7 +502,6 @@
             });
         }
         
-        // Filtro por loja
         if (lojaAtiva !== "todas") {
             filtrados = filtrados.filter(p => {
                 const lojaProduto = (p.loja || "").toLowerCase();
@@ -497,7 +512,6 @@
             });
         }
         
-        // Busca textual
         if (termoBusca.trim() !== "") {
             const busca = termoBusca.toLowerCase();
             filtrados = filtrados.filter(p => 
@@ -561,6 +575,9 @@
                 container.innerHTML = `<div class="empty-message">📭 Nenhum produto encontrado.<br><br>Verifique os cabeçalhos da planilha.</div>`;
             } else {
                 renderizarProdutos();
+                atualizarBotoesAtivos();
+                // Atualiza a URL com os parâmetros atuais (sem busca)
+                updateURL();
             }
         } catch (erro) {
             console.error("Erro:", erro);
@@ -568,36 +585,60 @@
         }
     }
 
+    function atualizarBotoesAtivos() {
+        document.querySelectorAll("#categoryFilter .cat-btn").forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-cat') === categoriaAtiva);
+        });
+        document.querySelectorAll("#storeFilter .store-btn").forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-store') === lojaAtiva);
+        });
+    }
+
     function setupFiltros() {
-        // Filtros de categoria
         document.querySelectorAll("#categoryFilter .cat-btn").forEach(btn => {
             btn.addEventListener("click", function() {
-                document.querySelectorAll("#categoryFilter .cat-btn").forEach(b => b.classList.remove("active"));
-                this.classList.add("active");
                 categoriaAtiva = this.getAttribute("data-cat");
                 renderizarProdutos();
+                atualizarBotoesAtivos();
+                updateURL();
             });
         });
         
-        // Filtros de loja
         document.querySelectorAll("#storeFilter .store-btn").forEach(btn => {
             btn.addEventListener("click", function() {
-                document.querySelectorAll("#storeFilter .store-btn").forEach(b => b.classList.remove("active"));
-                this.classList.add("active");
                 lojaAtiva = this.getAttribute("data-store");
                 renderizarProdutos();
+                atualizarBotoesAtivos();
+                updateURL();
             });
         });
     }
 
     function setupBusca() {
-        searchInput.addEventListener("input", e => { 
-            termoBusca = e.target.value; 
-            renderizarProdutos(); 
+        searchInput.addEventListener("input", e => {
+            termoBusca = e.target.value;
+            renderizarProdutos();
+            // Não atualiza a URL com busca
         });
     }
 
+    // Lê parâmetros iniciais da URL (categoria e loja, sem busca)
+    function getParamsFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const cat = urlParams.get('categoria');
+        const loja = urlParams.get('loja');
+        if (cat && cat !== 'todos') {
+            const btn = document.querySelector(`.cat-btn[data-cat="${cat}"]`);
+            if (btn) categoriaAtiva = cat;
+        }
+        if (loja && loja !== 'todas') {
+            const btn = document.querySelector(`.store-btn[data-store="${loja}"]`);
+            if (btn) lojaAtiva = loja;
+        }
+    }
+
     function init() {
+        getParamsFromURL();
         setupFiltros();
         setupBusca();
         carregarProdutos();
