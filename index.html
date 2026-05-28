@@ -336,7 +336,7 @@
     <div class="header">
         <div class="logo-area">🛍️</div>
         <div class="slogan">✨ TUDO QUE VOCÊ PRECISA, EM UM SÓ LUGAR ✨</div>
-        <div class="badge">🔗 Links de afiliado – você paga o mesmo preço - fornecedores oficiai</div>
+        <div class="badge">🔗 Links de afiliado – você paga o mesmo preço - fornecedores oficiais</div>
         
         <div class="contact-buttons">
             <a href="https://www.instagram.com/missio_promocoes/" target="_blank" class="contact-btn instagram">📷 Instagram</a>
@@ -390,6 +390,9 @@
 </div>
 
 <script>
+    // ============================================================
+    // API DO SHEETDB (SUA URL)
+    // ============================================================
     const API_URL = 'https://sheetdb.io/api/v1/b8497l310h84g';
 
     let produtos = [];
@@ -399,13 +402,42 @@
     const container = document.getElementById("productsContainer");
     const searchInput = document.getElementById("searchInput");
 
-    // Função para atualizar a URL baseada nos filtros atuais (sem o parâmetro "busca")
+    // ========== LER E APLICAR PARÂMETROS DA URL ==========
+    function getParamsFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoriaParam = urlParams.get('categoria');
+        const lojaParam = urlParams.get('loja');
+        const buscaParam = urlParams.get('busca');
+        
+        if (categoriaParam && categoriaParam !== 'todos') {
+            const btn = document.querySelector(`.cat-btn[data-cat="${categoriaParam}"]`);
+            if (btn) categoriaAtiva = categoriaParam;
+        }
+        if (lojaParam && lojaParam !== 'todas') {
+            const btn = document.querySelector(`.store-btn[data-store="${lojaParam}"]`);
+            if (btn) lojaAtiva = lojaParam;
+        }
+        if (buscaParam && buscaParam.trim() !== "") {
+            termoBusca = buscaParam.trim();
+            if (searchInput) searchInput.value = termoBusca;
+        }
+    }
+
+    // ========== ATUALIZAR A URL COM OS FILTROS ATIVOS ==========
     function updateURL() {
         const url = new URL(window.location);
-        if (categoriaAtiva === 'todos') url.searchParams.delete('categoria');
-        else url.searchParams.set('categoria', categoriaAtiva);
-        if (lojaAtiva === 'todas') url.searchParams.delete('loja');
-        else url.searchParams.set('loja', lojaAtiva);
+        url.searchParams.delete('categoria');
+        url.searchParams.delete('loja');
+        url.searchParams.delete('busca');
+        if (categoriaAtiva && categoriaAtiva !== 'todos') {
+            url.searchParams.set('categoria', categoriaAtiva);
+        }
+        if (lojaAtiva && lojaAtiva !== 'todas') {
+            url.searchParams.set('loja', lojaAtiva);
+        }
+        if (termoBusca && termoBusca.trim() !== "") {
+            url.searchParams.set('busca', termoBusca);
+        }
         window.history.pushState({}, '', url);
     }
 
@@ -495,6 +527,7 @@
     function renderizarProdutos() {
         let filtrados = [...produtos];
         
+        // Filtro por categoria
         if (categoriaAtiva !== "todos") {
             filtrados = filtrados.filter(p => {
                 const catProduto = (p.categoria || "").toLowerCase();
@@ -502,6 +535,7 @@
             });
         }
         
+        // Filtro por loja
         if (lojaAtiva !== "todas") {
             filtrados = filtrados.filter(p => {
                 const lojaProduto = (p.loja || "").toLowerCase();
@@ -512,6 +546,7 @@
             });
         }
         
+        // Filtro de busca textual
         if (termoBusca.trim() !== "") {
             const busca = termoBusca.toLowerCase();
             filtrados = filtrados.filter(p => 
@@ -574,9 +609,10 @@
             if (produtos.length === 0) {
                 container.innerHTML = `<div class="empty-message">📭 Nenhum produto encontrado.<br><br>Verifique os cabeçalhos da planilha.</div>`;
             } else {
+                // Aplica os filtros que foram lidos da URL e renderiza
                 renderizarProdutos();
                 atualizarBotoesAtivos();
-                // Atualiza a URL com os parâmetros atuais (sem busca)
+                // Atualiza a URL com os parâmetros atuais (já lidos)
                 updateURL();
             }
         } catch (erro) {
@@ -618,30 +654,15 @@
         searchInput.addEventListener("input", e => {
             termoBusca = e.target.value;
             renderizarProdutos();
-            // Não atualiza a URL com busca
+            updateURL(); // Atualiza a URL com o termo da busca
         });
     }
 
-    // Lê parâmetros iniciais da URL (categoria e loja, sem busca)
-    function getParamsFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const cat = urlParams.get('categoria');
-        const loja = urlParams.get('loja');
-        if (cat && cat !== 'todos') {
-            const btn = document.querySelector(`.cat-btn[data-cat="${cat}"]`);
-            if (btn) categoriaAtiva = cat;
-        }
-        if (loja && loja !== 'todas') {
-            const btn = document.querySelector(`.store-btn[data-store="${loja}"]`);
-            if (btn) lojaAtiva = loja;
-        }
-    }
-
     function init() {
-        getParamsFromURL();
+        getParamsFromURL();   // Lê os parâmetros da URL antes de carregar os produtos
         setupFiltros();
         setupBusca();
-        carregarProdutos();
+        carregarProdutos();   // Carrega os produtos e aplica os filtros lidos
     }
     
     init();
