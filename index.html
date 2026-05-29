@@ -3,580 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>MISSIO PROMOÇÕES - Compre com Segurança</title>
-    <meta name="description" content="Os melhores produtos com preços incríveis. Links oficiais da Amazon, Mercado Livre e Shopee. Compra segura e garantida.">
+    <title>Missio Promoções | Ofertas seguras em um só lugar</title>
+    <meta name="description" content="Encontre as melhores ofertas e produtos com preços incríveis da Amazon, Mercado Livre e Shopee. Links oficiais e compra 100% segura.">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-        }
-        body {
-            background: linear-gradient(145deg, #f8f9fc 0%, #f0f2f5 100%);
-            padding: 20px 16px 40px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 28px;
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(8px);
-            border-radius: 48px;
-            padding: 16px 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,94,0,0.2);
-        }
-        .logo-area {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #FF5E00, #FF8C40);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 12px;
-            font-size: 40px;
-            color: white;
-            box-shadow: 0 4px 12px rgba(255,94,0,0.3);
-        }
-        .slogan {
-            font-size: 0.9rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #FF5E00, #FF8C40);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .badge {
-            background: #FFE8E0;
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-top: 8px;
-            color: #FF5E00;
-        }
-        .security-badges {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 16px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .security-badge, .security-link {
-            background: white;
-            border-radius: 30px;
-            padding: 5px 12px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #2d3748;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .security-link {
-            cursor: pointer;
-            background: #f0f0f0;
-            text-decoration: none;
-            color: inherit;
-        }
-        .contact-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-top: 16px;
-        }
-        .contact-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: white;
-            padding: 8px 20px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .contact-btn.instagram {
-            background: linear-gradient(45deg, #f09433, #d62976, #962fbf);
-            color: white;
-        }
-        .contact-btn.whatsapp {
-            background: #25D366;
-            color: white;
-        }
-        .contact-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .info-section {
-            background: white;
-            border-radius: 28px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-        .info-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #FF5E00;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .info-text {
-            font-size: 0.85rem;
-            color: #4a5568;
-            line-height: 1.5;
-        }
-        .info-highlight {
-            background: #f0fff4;
-            padding: 12px;
-            border-radius: 20px;
-            margin-top: 12px;
-            font-size: 0.8rem;
-            color: #2f855a;
-        }
-        .filter-section {
-            margin-bottom: 24px;
-        }
-        .filter-title {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #666;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .categories, .store-filters {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 12px;
-            scrollbar-width: thin;
-        }
-        .cat-btn, .store-btn {
-            background: white;
-            border: 1px solid #e2e8f0;
-            padding: 8px 18px;
-            border-radius: 48px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-            color: #334155;
-        }
-        .cat-btn.active, .store-btn.active {
-            background: #FF5E00;
-            border-color: #FF5E00;
-            color: white;
-            box-shadow: 0 4px 12px rgba(255,94,0,0.3);
-        }
-        .store-btn.amazon.active { background: #FF9900; border-color: #FF9900; color: #232F3E; }
-        .store-btn.mercadolivre.active { background: #FFE600; border-color: #FFE600; color: #1a1a1a; }
-        .store-btn.shopee.active { background: #EE4D2D; border-color: #EE4D2D; color: white; }
-        .vertical-options {
-            background: white;
-            border-radius: 28px;
-            padding: 16px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .search-box {
-            position: relative;
-            width: 100%;
-        }
-        .search-box input {
-            width: 100%;
-            padding: 12px 20px 12px 48px;
-            border-radius: 60px;
-            border: 1px solid #e2e8f0;
-            background: white;
-            font-size: 1rem;
-            outline: none;
-        }
-        .search-box input:focus {
-            border-color: #FF5E00;
-            box-shadow: 0 0 0 2px rgba(255,94,0,0.2);
-        }
-        .search-icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2rem;
-        }
-        .option-group {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-        .option-label {
-            font-weight: 600;
-            color: #334155;
-            font-size: 0.9rem;
-            min-width: 90px;
-        }
-        .price-inputs {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex: 1;
-        }
-        .price-inputs input {
-            width: 100px;
-            padding: 8px 12px;
-            border-radius: 40px;
-            border: 1px solid #e2e8f0;
-            text-align: center;
-        }
-        .sort-btn, .favorite-filter-btn {
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .clear-filters {
-            background: #e2e8f0;
-            padding: 6px 12px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-        .products-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-        .product-card {
-            background: white;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 12px 24px -8px rgba(0,0,0,0.12);
-            transition: all 0.3s;
-            position: relative;
-        }
-        .product-card:hover {
-            transform: translateY(-6px);
-        }
-        .favorite-icon {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 20;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            overflow: hidden;
-            background: #f9f9f9;
-        }
-        .carousel-slides {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.3s ease-in-out;
-        }
-        .carousel-slide {
-            flex: 0 0 100%;
-            width: 100%;
-            height: 100%;
-        }
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-            z-index: 10;
-        }
-        .btn-prev { left: 10px; }
-        .btn-next { right: 10px; }
-        .carousel-dots {
-            position: absolute;
-            bottom: 12px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            z-index: 10;
-        }
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.6);
-            cursor: pointer;
-        }
-        .dot.active {
-            background: #FF5E00;
-            width: 20px;
-            border-radius: 10px;
-        }
-        .store-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #f1f5f9;
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-        .store-badge.amazon { background: #FF9900; color: #232F3E; }
-        .store-badge.mercadolivre { background: #FFE600; color: #1a1a1a; }
-        .store-badge.shopee { background: #EE4D2D; color: white; }
-        .product-info {
-            padding: 18px;
-        }
-        .product-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #1e293b;
-            padding-right: 40px;
-        }
-        .product-desc {
-            font-size: 0.85rem;
-            color: #475569;
-            line-height: 1.45;
-            margin-bottom: 12px;
-        }
-        .price {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #FF5E00;
-            margin-bottom: 18px;
-        }
-        .price::before {
-            content: "💰 ";
-            font-size: 1.2rem;
-        }
-        .buy-btn {
-            background: linear-gradient(95deg, #FF5E00 0%, #FF8C40 100%);
-            color: white;
-            text-align: center;
-            padding: 14px;
-            border-radius: 60px;
-            font-weight: 700;
-            text-decoration: none;
-            display: block;
-            transition: all 0.2s;
-            box-shadow: 0 4px 8px rgba(255,94,0,0.25);
-        }
-        .buy-btn:hover {
-            background: linear-gradient(95deg, #e05200 0%, #ff7a2a 100%);
-            transform: scale(1.01);
-        }
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.75rem;
-            color: #6c757d;
-            padding: 16px;
-            border-top: 1px solid #e9ecef;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-        .footer-links a {
-            color: #FF5E00;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .loading {
-            text-align: center;
-            padding: 48px;
-            background: white;
-            border-radius: 48px;
-            color: #FF5E00;
-            font-weight: 500;
-        }
-        .empty-message {
-            text-align: center;
-            padding: 48px;
-            background: white;
-            border-radius: 48px;
-            color: #888;
-        }
-        @media (max-width: 480px) {
-            body { padding: 16px 12px 32px; }
-            .option-group { flex-direction: column; align-items: stretch; }
-            .price-inputs { justify-content: center; }
-        }
+        /* (mesmo CSS anterior, sem alterações) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #f8fafc; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.5; color: #0f172a; padding: 1.5rem 1rem 3rem; }
+        .container { max-width: 1280px; margin: 0 auto; }
+        .hero { background: white; border-radius: 1.5rem; padding: 1.2rem 1.5rem; margin-bottom: 1.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; text-align: center; }
+        .main-title { font-size: 1.35rem; font-weight: 800; background: linear-gradient(135deg, #FF5E00, #FF8C40); background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 0.5rem; letter-spacing: -0.3px; }
+        .security-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin: 0.75rem 0 1rem; }
+        .security-badge { background: #f8fafc; padding: 0.3rem 0.9rem; border-radius: 40px; font-size: 0.7rem; font-weight: 600; color: #1e293b; display: inline-flex; align-items: center; gap: 0.4rem; border: 1px solid #e2e8f0; }
+        .contact-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-top: 0.5rem; }
+        .contact-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1f5f9; padding: 0.5rem 1.2rem; border-radius: 40px; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: all 0.2s; color: #1e293b; }
+        .contact-btn.instagram { background: linear-gradient(45deg, #f09433, #d62976, #962fbf); color: white; }
+        .contact-btn.whatsapp { background: #25D366; color: white; }
+        .contact-btn.whatsapp span { font-weight: normal; font-size: 0.7rem; background: rgba(255,255,255,0.2); border-radius: 30px; padding: 0.1rem 0.5rem; margin-left: 0.3rem; }
+        .contact-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .info-section { background: white; border-radius: 1rem; padding: 1.2rem 1.5rem; margin-bottom: 1.8rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; text-align: center; }
+        .info-title { font-weight: 700; font-size: 1rem; color: #FF5E00; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .info-text { font-size: 0.85rem; color: #334155; margin-bottom: 0.5rem; }
+        .info-highlight { background: #fff0e6; padding: 0.5rem; border-radius: 1rem; font-size: 0.8rem; color: #c2410c; font-weight: 500; }
+        .search-filter-bar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.8rem; flex-wrap: wrap; }
+        .search-box { flex: 1; position: relative; }
+        .search-box input { width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; border: 1px solid #cbd5e1; border-radius: 2rem; font-size: 0.9rem; background: white; transition: all 0.2s; }
+        .search-box input:focus { border-color: #FF5E00; outline: none; box-shadow: 0 0 0 2px rgba(255,94,0,0.2); }
+        .search-icon { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1rem; }
+        .filter-icon { background: #FF5E00; color: white; border: none; border-radius: 2rem; padding: 0.7rem 1.5rem; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+        .filter-icon:hover { background: #e04e00; }
+        .featured-section { background: white; border-radius: 1rem; padding: 1rem; margin-bottom: 1.8rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .featured-title { font-weight: 700; font-size: 1rem; color: #FF5E00; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+        .featured-carousel { position: relative; overflow: hidden; border-radius: 1rem; }
+        .carousel-track { display: flex; transition: transform 0.4s ease-in-out; }
+        .carousel-slide-featured { flex: 0 0 100%; background: #f8fafc; border-radius: 1rem; overflow: hidden; display: flex; flex-direction: column; }
+        .featured-link { text-decoration: none; color: inherit; display: flex; flex-direction: column; cursor: pointer; }
+        .featured-img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #fff; padding: 1rem; }
+        .featured-info { padding: 0.75rem; text-align: center; }
+        .featured-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .featured-price { font-weight: 700; color: #FF5E00; font-size: 1rem; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: none; color: white; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; transition: background 0.2s; }
+        .carousel-btn:hover { background: rgba(0,0,0,0.8); }
+        .btn-prev-featured { left: 0.5rem; }
+        .btn-next-featured { right: 0.5rem; }
+        .carousel-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.75rem; }
+        .dot-featured { width: 8px; height: 8px; background: #cbd5e1; border-radius: 50%; cursor: pointer; transition: all 0.2s; }
+        .dot-featured.active { background: #FF5E00; width: 20px; border-radius: 10px; }
+        @media (min-width: 640px) { .carousel-slide-featured { flex: 0 0 50%; } }
+        @media (min-width: 768px) { .carousel-slide-featured { flex: 0 0 33.333%; } }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .product-card { background: white; border-radius: 1rem; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; position: relative; display: flex; flex-direction: column; }
+        .product-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        .favorite-icon { position: absolute; top: 0.75rem; right: 0.75rem; background: rgba(255,255,255,0.9); border-radius: 9999px; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 1.25rem; transition: transform 0.2s; }
+        .carousel-container { position: relative; aspect-ratio: 1 / 1; background: #f8fafc; overflow: hidden; }
+        .carousel-slides { display: flex; width: 100%; height: 100%; transition: transform 0.3s ease; }
+        .carousel-slide { flex: 0 0 100%; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f8fafc; }
+        .carousel-slide img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: 0 auto; }
+        .carousel-btn-product { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: none; color: white; width: 1.75rem; height: 1.75rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
+        .product-info { padding: 1rem; flex: 1; display: flex; flex-direction: column; }
+        .store-badge { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.7rem; font-weight: 600; padding: 0.25rem 0.5rem; border-radius: 0.375rem; margin-bottom: 0.5rem; width: fit-content; }
+        .product-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; line-height: 1.4; }
+        .product-desc { font-size: 0.8rem; color: #475569; margin-bottom: 0.75rem; line-height: 1.45; white-space: normal; word-wrap: break-word; }
+        .price { font-size: 1.25rem; font-weight: 700; color: #FF5E00; margin-bottom: 1rem; }
+        .buy-btn { background: linear-gradient(95deg, #FF5E00, #FF8C40); color: white; text-align: center; padding: 0.625rem; border-radius: 9999px; font-weight: 600; text-decoration: none; transition: all 0.1s ease; display: block; cursor: pointer; }
+        .buy-btn:active { transform: scale(0.98); background: #e04e00; }
+        .footer { margin-top: 2rem; text-align: center; font-size: 0.75rem; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 2rem; }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .filters-drawer { position: fixed; top: 0; left: -320px; width: 320px; height: 100%; background: white; z-index: 1000; transition: left 0.3s ease; box-shadow: 2px 0 8px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow-y: auto; border-right: 1px solid #e2e8f0; }
+        .filters-drawer.open { left: 0; }
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #e2e8f0; font-weight: 700; background: white; position: sticky; top: 0; }
+        .close-drawer { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #64748b; }
+        .drawer-content { padding: 1rem; flex: 1; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
+        .overlay.show { display: block; }
+        .filter-group { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #eef2f6; }
+        .filter-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #475569; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .categories-list, .stores-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .filter-chip { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 0.4rem 0.9rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 500; cursor: pointer; transition: all 0.2s; color: #334155; }
+        .filter-chip.active { background: #FF5E00; border-color: #FF5E00; color: white; }
+        .price-inputs { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
+        .price-inputs input { flex: 1; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 0.5rem; font-size: 0.8rem; }
+        .sort-btn, .favorite-btn { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.7rem; font-weight: 600; cursor: pointer; width: 100%; text-align: center; margin-top: 0.5rem; }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <div class="logo-area">🛍️</div>
-        <div class="slogan">✨ MISSIO PROMOÇÕES - COMPRE COM SEGURANÇA ✨</div>
-        <div class="badge">🔗 Você paga o mesmo preço | Links oficiais | Fornecedores parceiros</div>
-        
-        <!-- Selos de segurança + Política de Privacidade no topo -->
-        <div class="security-badges">
+    <div class="hero">
+        <div class="main-title">✨ MISSIO PROMOÇÕES - COMPRE COM SEGURANÇA ✨</div>
+        <div class="security-strip">
             <span class="security-badge">🔒 Compra Segura</span>
             <span class="security-badge">✅ Sites Oficiais</span>
+            <span class="security-badge">💰 Você paga o mesmo preço</span>
             <span class="security-badge">📦 Entrega Garantida</span>
-            <span class="security-badge">🛡️ Dados Protegidos</span>
-            <a href="#" id="openPrivacyTop" class="security-link">📜 Política de Privacidade</a>
         </div>
-        
-        <div class="contact-buttons">
-            <a href="https://www.instagram.com/missio_promoções/" target="_blank" class="contact-btn instagram">📷 Instagram</a>
-            <a href="https://wa.me/5511966456055?text=Olá! Vi seu site e gostaria de saber mais sobre os produtos. Pode me ajudar?" target="_blank" class="contact-btn whatsapp">💬 WhatsApp</a>
+        <div class="contact-row">
+            <a href="https://www.instagram.com/missio_promocoes/" target="_blank" class="contact-btn instagram">📷 Instagram</a>
+            <a href="https://wa.me/5511966456055?text=Olá! Não encontrei o produto que procurava no site. Pode me ajudar?" target="_blank" class="contact-btn whatsapp">💬 WhatsApp <span>❓ Não achou? Fale conosco</span></a>
         </div>
     </div>
 
-    <!-- Seção "Como funciona" (gera confiança) -->
     <div class="info-section">
-        <div class="info-title">
-            <span>🤝</span> Como funciona? <span>🔐</span>
-        </div>
-        <div class="info-text">
-            Aqui você encontra os melhores produtos da <strong>Amazon, Mercado Livre e Shopee</strong>, tudo em um só lugar.
-            Ao clicar em "COMPRAR AGORA", você será redirecionado para a loja oficial (Amazon, Mercado Livre ou Shopee)
-            e fará sua compra com total segurança e garantia das plataformas.
-        </div>
-        <div class="info-highlight">
-            💡 <strong>Você paga o mesmo preço!</strong> Utilizamos links de afiliado, mas o valor do produto não muda para você.
-        </div>
+        <div class="info-title"><span>🤝</span> Como funciona? <span>🔐</span></div>
+        <div class="info-text">Aqui você encontra os melhores produtos da <strong>Amazon, Mercado Livre e Shopee</strong>, tudo em um só lugar. Ao clicar em "COMPRAR AGORA", você será redirecionado para a loja oficial e fará sua compra com total segurança.</div>
+        <div class="info-highlight">💡 <strong>Você paga o mesmo preço!</strong> Utilizamos links de afiliado, mas o valor do produto não muda para você.</div>
     </div>
 
-    <!-- Categorias -->
-    <div class="filter-section">
-        <div class="filter-title">📂 Categorias</div>
-        <div class="categories" id="categoryFilter">
-            <button class="cat-btn active" data-cat="todos">📦 Todos</button>
-            <button class="cat-btn" data-cat="bijuterias">💎 Bijuterias/Acessórios</button>
-            <button class="cat-btn" data-cat="carro">🚗 Carro</button>
-            <button class="cat-btn" data-cat="casa">🏠 Casa</button>
-            <button class="cat-btn" data-cat="cosmeticos">💄 Cosméticos</button>
-            <button class="cat-btn" data-cat="eletronicos">📱 Eletrônicos</button>
-            <button class="cat-btn" data-cat="esportes">⚽ Esportes</button>
-            <button class="cat-btn" data-cat="livros">📚 Livros</button>
-            <button class="cat-btn" data-cat="moda-feminina">👗 Moda Feminina</button>
-            <button class="cat-btn" data-cat="moda-infantil">🧸 Moda Infantil</button>
-            <button class="cat-btn" data-cat="moda-masculina">👔 Moda Masculina</button>
-            <button class="cat-btn" data-cat="moto">🏍️ Moto</button>
-            <button class="cat-btn" data-cat="negocio">💼 Para seu Comércio</button>
-            <button class="cat-btn" data-cat="pesca">🎣 Pesca</button>
-            <button class="cat-btn" data-cat="pet">🐾 Pet</button>
-            <button class="cat-btn" data-cat="suplementacao">💊 Suplementação</button>
-        </div>
-    </div>
-
-    <!-- Lojas / Vitrines -->
-    <div class="filter-section">
-        <div class="filter-title">🏪 Lojas / Vitrines</div>
-        <div class="store-filters" id="storeFilter">
-            <button class="store-btn active" data-store="todas">🛒 Todas as Lojas</button>
-            <button class="store-btn" data-store="amazon">🛒 Amazon</button>
-            <button class="store-btn" data-store="mercadolivre">🟡 Mercado Livre</button>
-            <button class="store-btn" data-store="shopee">🛍️ Shopee</button>
-        </div>
-    </div>
-
-    <!-- Opções de filtro (busca, ordenação, preço, favoritos) -->
-    <div class="vertical-options">
+    <div class="search-filter-bar">
         <div class="search-box">
             <span class="search-icon">🔍</span>
             <input type="text" id="searchInput" placeholder="Buscar produto...">
         </div>
-        <div class="option-group">
-            <span class="option-label">📋 Ordenar:</span>
-            <button id="sortAlphaBtn" class="sort-btn">🔤 A–Z (Nome)</button>
-            <button id="clearSortBtn" class="clear-filters">Limpar ordenação</button>
+        <button class="filter-icon" id="openFiltersBtn">🧹 Filtrar</button>
+    </div>
+
+    <div class="featured-section" id="featuredSection" style="display: none;">
+        <div class="featured-title"><span>🔥 Destaques & Novidades</span><span style="font-size:0.7rem;">⚡ Ofertas imperdíveis</span></div>
+        <div class="featured-carousel">
+            <div class="carousel-track" id="featuredTrack"></div>
+            <button class="carousel-btn btn-prev-featured" id="prevFeatured">‹</button>
+            <button class="carousel-btn btn-next-featured" id="nextFeatured">›</button>
         </div>
-        <div class="option-group">
-            <span class="option-label">💰 Faixa de preço:</span>
-            <div class="price-inputs">
-                <input type="number" id="minPrice" placeholder="Mínimo" step="1" value="0">
-                <span>até</span>
-                <input type="number" id="maxPrice" placeholder="Máximo" step="1" value="999999">
-            </div>
-            <button id="clearPriceBtn" class="clear-filters">Limpar filtro</button>
-        </div>
-        <div class="option-group">
-            <span class="option-label">⭐ Favoritos:</span>
-            <button id="showFavoritesBtn" class="favorite-filter-btn">❤️ Ver favoritos</button>
-            <button id="showAllBtn" class="favorite-filter-btn">🔄 Mostrar todos</button>
-        </div>
+        <div class="carousel-dots" id="featuredDots"></div>
     </div>
 
     <div class="products-grid" id="productsContainer">
-        <div class="loading">📡 Carregando produtos...</div>
+        <div style="grid-column:1/-1; text-align:center; padding:2rem;">📡 Carregando produtos...</div>
     </div>
 
     <div class="footer">
         <div class="footer-links">
             <a href="#" id="openPrivacy">📜 Política de Privacidade</a>
             <a href="#" id="openTerms">⚖️ Termos de Uso</a>
-            <a href="https://wa.me/5511966456055" target="_blank">📞 Fale Conosco</a>
         </div>
-        <p style="margin-top: 12px;">&copy; 2025 MISSIO PROMOÇÕES - Todos os direitos reservados.</p>
-        <p style="margin-top: 8px; font-size:0.7rem;">Este site é um agregador de links de afiliado. As compras são realizadas nas lojas parceiras (Amazon, Mercado Livre, Shopee).</p>
+        <p>© 2025 Missio Promoções - Todos os direitos reservados.<br>As compras são realizadas nas lojas parceiras (Amazon, Mercado Livre, Shopee).</p>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="filters-drawer" id="filtersDrawer">
+    <div class="drawer-header"><span>📋 Filtros</span><button class="close-drawer" id="closeFiltersBtn">✕</button></div>
+    <div class="drawer-content">
+        <div class="filter-group"><div class="filter-title">📂 CATEGORIAS</div><div class="categories-list" id="categoryFilter"></div></div>
+        <div class="filter-group"><div class="filter-title">🏪 LOJAS / VITRINES</div><div class="stores-list" id="storeFilter"></div></div>
+        <div class="filter-group"><div class="filter-title">💰 FILTRAR POR PREÇO</div><div class="price-range"><div class="price-inputs"><input type="number" id="minPrice" placeholder="Mínimo" step="1" value="0"><input type="number" id="maxPrice" placeholder="Máximo" step="1" value="999999"></div><button id="clearPriceBtn" class="sort-btn">Limpar filtro</button></div></div>
+        <div class="filter-group"><div class="filter-title">📋 ORDENAR PRODUTOS</div><button id="sortAlphaBtn" class="sort-btn">🔤 A–Z (Nome)</button><button id="clearSortBtn" class="sort-btn">Limpar ordenação</button></div>
+        <div class="filter-group"><div class="filter-title">⭐ SEUS FAVORITOS</div><button id="showFavoritesBtn" class="favorite-btn">❤️ Ver favoritos</button><button id="showAllBtn" class="favorite-btn">🔄 Mostrar todos</button></div>
     </div>
 </div>
 
 <script>
-    // ============================================================
-    // API DO SHEETDB (SUA URL)
-    // ============================================================
     const API_URL = 'https://sheetdb.io/api/v1/b8497l310h84g';
-
     let produtosOriginais = [];
     let categoriaAtiva = "todos";
     let lojaAtiva = "todas";
@@ -596,68 +171,36 @@
     const clearPriceBtn = document.getElementById("clearPriceBtn");
     const showFavoritesBtn = document.getElementById("showFavoritesBtn");
     const showAllBtn = document.getElementById("showAllBtn");
+    const categoryFilterDiv = document.getElementById("categoryFilter");
+    const storeFilterDiv = document.getElementById("storeFilter");
 
-    // ========== POPUP DE POLÍTICA DE PRIVACIDADE E TERMOS ==========
-    function openModal(title, content) {
-        const modal = document.createElement('div');
-        modal.style.position = 'fixed';
-        modal.style.top = '0';
-        modal.style.left = '0';
-        modal.style.width = '100%';
-        modal.style.height = '100%';
-        modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
-        modal.style.display = 'flex';
-        modal.style.alignItems = 'center';
-        modal.style.justifyContent = 'center';
-        modal.style.zIndex = '1000';
-        modal.innerHTML = `
-            <div style="background:white; max-width:90%; width:500px; border-radius:32px; padding:24px; position:relative;">
-                <h3 style="color:#FF5E00; margin-bottom:16px;">${title}</h3>
-                <p style="font-size:0.85rem; color:#333; line-height:1.5;">${content}</p>
-                <button id="closeModalBtn" style="margin-top:20px; background:#FF5E00; color:white; border:none; padding:10px 20px; border-radius:40px; cursor:pointer;">Fechar</button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-        document.getElementById('closeModalBtn').onclick = () => modal.remove();
-        modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
+    const drawer = document.getElementById("filtersDrawer");
+    const overlay = document.getElementById("overlay");
+    const openBtn = document.getElementById("openFiltersBtn");
+    const closeBtn = document.getElementById("closeFiltersBtn");
+    function openDrawer() { drawer.classList.add("open"); overlay.classList.add("show"); }
+    function closeDrawer() { drawer.classList.remove("open"); overlay.classList.remove("show"); }
+    openBtn?.addEventListener("click", openDrawer);
+    closeBtn?.addEventListener("click", closeDrawer);
+    overlay?.addEventListener("click", closeDrawer);
+
+    let featuredProdutos = [];
+    let featuredIndex = 0;
+    let featuredInterval;
+    const featuredSection = document.getElementById("featuredSection");
+    const featuredTrack = document.getElementById("featuredTrack");
+    const prevFeaturedBtn = document.getElementById("prevFeatured");
+    const nextFeaturedBtn = document.getElementById("nextFeatured");
+    const dotsContainer = document.getElementById("featuredDots");
+
+    function getStoreBadge(loja) {
+        const lojaLower = (loja || "").toLowerCase();
+        if (lojaLower === "amazon" || lojaLower === "amazon br") return { nome: "Amazon", classe: "amazon", icon: "🛒" };
+        if (lojaLower === "mercadolivre" || lojaLower === "mercado livre" || lojaLower === "mercado live") return { nome: "Mercado Livre", classe: "mercadolivre", icon: "🟡" };
+        if (lojaLower === "shopee") return { nome: "Shopee", classe: "shopee", icon: "🛍️" };
+        return { nome: loja || "Loja", classe: "", icon: "🏷️" };
     }
 
-    // Event listeners para política e termos (rodapé e topo)
-    document.getElementById('openPrivacy')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal('Política de Privacidade', 
-            'Não armazenamos dados bancários ou informações sensíveis. Seus favoritos são salvos apenas no seu navegador. Os links direcionam para lojas oficiais (Amazon, Mercado Livre, Shopee) que possuem suas próprias políticas de privacidade e segurança.'
-        );
-    });
-    document.getElementById('openTerms')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal('Termos de Uso', 
-            'Ao utilizar este site, você concorda que os links são de afiliado e que as compras são realizadas diretamente nas lojas parceiras. Não nos responsabilizamos por eventuais problemas com entrega, qualidade ou trocas, pois essas são de responsabilidade exclusiva das lojas onde a compra foi efetuada.'
-        );
-    });
-    document.getElementById('openPrivacyTop')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal('Política de Privacidade', 
-            'Não armazenamos dados bancários ou informações sensíveis. Seus favoritos são salvos apenas no seu navegador. Os links direcionam para lojas oficiais (Amazon, Mercado Livre, Shopee) que possuem suas próprias políticas de privacidade e segurança.'
-        );
-    });
-
-    // ========== FAVORITOS ==========
-    function carregarFavoritos() {
-        const saved = localStorage.getItem("missio_favoritos");
-        if (saved) favoritos = new Set(JSON.parse(saved));
-    }
-    function salvarFavoritos() {
-        localStorage.setItem("missio_favoritos", JSON.stringify([...favoritos]));
-    }
-    function toggleFavorito(id) {
-        if (favoritos.has(id)) favoritos.delete(id);
-        else favoritos.add(id);
-        salvarFavoritos();
-        renderizarProdutos();
-    }
-
-    // ========== UTILITÁRIOS ==========
     function extrairNumeroPreco(precoStr) {
         if (!precoStr) return 0;
         let num = precoStr.replace(/R\$/, '').replace(/\./g, '').replace(',', '.').trim();
@@ -670,71 +213,59 @@
         return [...lista].sort((a, b) => (a.nome || "").localeCompare(b.nome || "", "pt"));
     }
 
-    function filtrarProdutos() {
-        let filtrados = [...produtosOriginais];
-        if (categoriaAtiva !== "todos") {
-            filtrados = filtrados.filter(p => (p.categoria || "").toLowerCase() === categoriaAtiva.toLowerCase());
-        }
-        if (lojaAtiva !== "todas") {
-            filtrados = filtrados.filter(p => {
-                const lojaProduto = (p.loja || "").toLowerCase();
-                if (lojaAtiva === "amazon") return lojaProduto === "amazon" || lojaProduto === "amazon br";
-                if (lojaAtiva === "mercadolivre") return lojaProduto === "mercadolivre" || lojaProduto === "mercado livre" || lojaProduto === "mercado live";
-                if (lojaAtiva === "shopee") return lojaProduto === "shopee";
-                return false;
-            });
-        }
-        if (termoBusca.trim() !== "") {
-            const busca = termoBusca.toLowerCase();
-            filtrados = filtrados.filter(p => (p.nome || "").toLowerCase().includes(busca) || (p.descricao || "").toLowerCase().includes(busca));
-        }
-        filtrados = filtrados.filter(p => {
-            const valor = extrairNumeroPreco(p.preco);
-            return valor >= precoMin && valor <= precoMax;
-        });
-        if (modoFavoritos) {
-            filtrados = filtrados.filter(p => favoritos.has(p.id));
-        }
-        filtrados = aplicarOrdenacao(filtrados);
-        return filtrados;
+    function carregarFavoritos() {
+        const saved = localStorage.getItem("missio_favoritos");
+        if (saved) favoritos = new Set(JSON.parse(saved));
+    }
+    function salvarFavoritos() {
+        localStorage.setItem("missio_favoritos", JSON.stringify([...favoritos]));
+    }
+    window.toggleFavorito = function(id) {
+        if (favoritos.has(id)) favoritos.delete(id);
+        else favoritos.add(id);
+        salvarFavoritos();
+        renderizarProdutos();
+    };
+
+    function openModal(title, content) {
+        const modal = document.createElement('div');
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100%';
+        modal.style.height = '100%';
+        modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+        modal.style.display = 'flex';
+        modal.style.alignItems = 'center';
+        modal.style.justifyContent = 'center';
+        modal.style.zIndex = '1000';
+        modal.innerHTML = `<div style="background:white; max-width:90%; width:500px; border-radius:32px; padding:24px;"><h3 style="color:#FF5E00; margin-bottom:16px;">${title}</h3><p style="font-size:0.85rem; color:#333;">${content}</p><button id="closeModalBtn" style="margin-top:20px; background:#FF5E00; color:white; border:none; padding:10px 20px; border-radius:40px;">Fechar</button></div>`;
+        document.body.appendChild(modal);
+        document.getElementById('closeModalBtn').onclick = () => modal.remove();
+        modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
     }
 
-    function getStoreBadge(loja) {
-        const lojaLower = (loja || "").toLowerCase();
-        if (lojaLower === "amazon" || lojaLower === "amazon br") return { nome: "Amazon", classe: "amazon", icon: "🛒" };
-        if (lojaLower === "mercadolivre" || lojaLower === "mercado livre" || lojaLower === "mercado live") return { nome: "Mercado Livre", classe: "mercadolivre", icon: "🟡" };
-        if (lojaLower === "shopee") return { nome: "Shopee", classe: "shopee", icon: "🛍️" };
-        return { nome: loja || "Loja", classe: "", icon: "🏷️" };
-    }
-
-    function criarCarrossel(produtoId, imagens) {
-        if (!imagens || imagens.length === 0) imagens = ["https://placehold.co/600x400/FFE0B5/FF5E00?text=Sem+imagem"];
-        const containerId = `carousel-${produtoId}`;
-        let dotsHtml = '';
-        if (imagens.length > 1) {
-            for (let i = 0; i < imagens.length; i++) dotsHtml += `<span class="dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`;
-        }
+    function criarCarrossel(id, imagens) {
+        if (!imagens || imagens.length === 0) imagens = ["https://placehold.co/600x400/e2e8f0/FF5E00?text=Missio+Promo%C3%A7%C3%B5es"];
         const slidesHtml = imagens.map((img, idx) => `<div class="carousel-slide"><img src="${img}" alt="Foto ${idx+1}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Erro'"></div>`).join('');
-        return `
-            <div class="carousel-container" id="${containerId}">
-                <div class="carousel-slides" style="transform: translateX(0%);">${slidesHtml}</div>
-                ${imagens.length > 1 ? `<button class="carousel-btn btn-prev">‹</button><button class="carousel-btn btn-next">›</button><div class="carousel-dots">${dotsHtml}</div>` : ''}
-            </div>
-        `;
+        let dotsHtml = '', btnsHtml = '';
+        if (imagens.length > 1) {
+            for (let i = 0; i < imagens.length; i++) dotsHtml += `<span class="dot" data-index="${i}"></span>`;
+            btnsHtml = `<button class="carousel-btn-product prev">‹</button><button class="carousel-btn-product next">›</button><div class="carousel-dots" style="position:absolute; bottom:0.5rem; left:0; right:0; display:flex; justify-content:center; gap:0.5rem; z-index:10;">${dotsHtml}</div>`;
+        }
+        return `<div class="carousel-container" data-id="${id}"><div class="carousel-slides" style="display:flex; width:100%; height:100%; transition:transform 0.3s;">${slidesHtml}</div>${btnsHtml}</div>`;
     }
 
-    function ativarCarrossel(produtoId, imagens) {
-        const containerEl = document.getElementById(`carousel-${produtoId}`);
+    function ativarCarrosselProduto(containerEl, imagens) {
         if (!containerEl || imagens.length <= 1) return;
         const slidesDiv = containerEl.querySelector('.carousel-slides');
-        const prevBtn = containerEl.querySelector('.btn-prev');
-        const nextBtn = containerEl.querySelector('.btn-next');
+        const prevBtn = containerEl.querySelector('.prev');
+        const nextBtn = containerEl.querySelector('.next');
         const dots = containerEl.querySelectorAll('.dot');
         let currentIndex = 0;
         const total = imagens.length;
         function update(i) {
-            if (i < 0) i = 0;
-            if (i >= total) i = total - 1;
+            i = Math.max(0, Math.min(i, total - 1));
             currentIndex = i;
             slidesDiv.style.transform = `translateX(-${currentIndex * 100}%)`;
             dots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentIndex));
@@ -751,61 +282,127 @@
             if (endX < startX - 30) next();
             if (endX > startX + 30) prev();
         });
+        update(0);
     }
 
-    function renderizarProdutos() {
-        const produtosFiltrados = filtrarProdutos();
-        if (produtosFiltrados.length === 0) {
-            container.innerHTML = `<div class="empty-message">😕 Nenhum produto encontrado.</div>`;
-            return;
+    function initFeaturedCarousel() {
+        if (!featuredProdutos.length) { featuredSection.style.display = 'none'; return; }
+        featuredSection.style.display = 'block';
+        featuredTrack.innerHTML = '';
+        featuredProdutos.forEach((prod, idx) => {
+            const badge = getStoreBadge(prod.loja);
+            let precoFormatado = prod.preco;
+            if (precoFormatado && !precoFormatado.includes('R$')) {
+                const precoNum = parseFloat(precoFormatado.toString().replace(',', '.'));
+                if (!isNaN(precoNum)) precoFormatado = `R$ ${precoNum.toFixed(2).replace('.', ',')}`;
+            }
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide-featured';
+            slide.innerHTML = `<a href="${prod.link || "#"}" target="_blank" rel="noopener noreferrer nofollow" class="featured-link"><img class="featured-img" src="${(prod.imagens_1 && prod.imagens_1.trim()) ? prod.imagens_1 : 'https://placehold.co/600x400/e2e8f0/FF5E00?text=Sem+imagem'}" alt="${prod.nome}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Erro'"><div class="featured-info"><div class="featured-name">${prod.nome || "Produto"}</div><div class="featured-price">${precoFormatado || "R$ 0,00"}</div><span class="store-badge" style="${badge.classe === 'amazon' ? 'background:#FF9900;color:#232F3E' : badge.classe === 'mercadolivre' ? 'background:#FFE600;color:#1a1a1a' : badge.classe === 'shopee' ? 'background:#EE4D2D;color:white' : ''}">${badge.icon} ${badge.nome}</span></div></a>`;
+            featuredTrack.appendChild(slide);
+        });
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < featuredProdutos.length; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot-featured');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToFeaturedSlide(i));
+            dotsContainer.appendChild(dot);
         }
+        updateFeaturedSlidePosition();
+        startAutoScroll();
+    }
+
+    function updateFeaturedSlidePosition() {
+        const slideWidth = featuredTrack.children[0]?.offsetWidth || 0;
+        featuredTrack.style.transform = `translateX(-${featuredIndex * slideWidth}px)`;
+        document.querySelectorAll('.dot-featured').forEach((dot, i) => dot.classList.toggle('active', i === featuredIndex));
+    }
+
+    function goToFeaturedSlide(index) {
+        featuredIndex = Math.min(Math.max(0, index), featuredProdutos.length - 1);
+        updateFeaturedSlidePosition();
+        resetAutoScroll();
+    }
+
+    function nextFeatured() { goToFeaturedSlide(featuredIndex + 1); }
+    function prevFeatured() { goToFeaturedSlide(featuredIndex - 1); }
+
+    let autoScrollInterval;
+    function startAutoScroll() { if (autoScrollInterval) clearInterval(autoScrollInterval); if (featuredProdutos.length > 1) { autoScrollInterval = setInterval(() => nextFeatured(), 4000); } }
+    function resetAutoScroll() { if (autoScrollInterval) { clearInterval(autoScrollInterval); startAutoScroll(); } }
+
+    function renderizarProdutos() {
+        let filtrados = [...produtosOriginais];
+        if (categoriaAtiva !== "todos") filtrados = filtrados.filter(p => (p.categoria || "").toLowerCase() === categoriaAtiva.toLowerCase());
+        if (lojaAtiva !== "todas") {
+            filtrados = filtrados.filter(p => {
+                const lojaProduto = (p.loja || "").toLowerCase();
+                if (lojaAtiva === "amazon") return lojaProduto === "amazon" || lojaProduto === "amazon br";
+                if (lojaAtiva === "mercadolivre") return lojaProduto === "mercadolivre" || lojaProduto === "mercado livre" || lojaProduto === "mercado live";
+                if (lojaAtiva === "shopee") return lojaProduto === "shopee";
+                return false;
+            });
+        }
+        if (termoBusca.trim()) {
+            const busca = termoBusca.toLowerCase();
+            filtrados = filtrados.filter(p => (p.nome || "").toLowerCase().includes(busca) || (p.descricao || "").toLowerCase().includes(busca));
+        }
+        filtrados = filtrados.filter(p => { const valor = extrairNumeroPreco(p.preco); return valor >= precoMin && valor <= precoMax; });
+        if (modoFavoritos) filtrados = filtrados.filter(p => favoritos.has(p.id));
+        filtrados = aplicarOrdenacao(filtrados);
+        if (filtrados.length === 0) { container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">😕 Nenhum produto encontrado.</div>'; return; }
         let html = "";
-        for (let p of produtosFiltrados) {
+        for (let p of filtrados) {
             const badge = getStoreBadge(p.loja);
-            const imagens = [p.imagens_1, p.imagens_2, p.imagens_3].filter(img => img && img.trim() !== "");
+            const imagens = [p.imagens_1, p.imagens_2, p.imagens_3].filter(img => img && img.trim());
             let precoFormatado = p.preco;
             if (precoFormatado && !precoFormatado.includes('R$')) {
                 const precoNum = parseFloat(precoFormatado.toString().replace(',', '.'));
                 if (!isNaN(precoNum)) precoFormatado = `R$ ${precoNum.toFixed(2).replace('.', ',')}`;
             }
             const isFav = favoritos.has(p.id);
-            html += `
-                <div class="product-card" data-prod-id="${p.id}">
-                    <div class="favorite-icon" onclick="toggleFavorito('${p.id}')">${isFav ? '❤️' : '🤍'}</div>
-                    ${criarCarrossel(p.id, imagens)}
-                    <div class="product-info">
-                        <span class="store-badge ${badge.classe}">${badge.icon} ${badge.nome}</span>
-                        <div class="product-title">${p.nome || "Produto"}</div>
-                        <div class="product-desc">${(p.descricao || "Sem descrição").substring(0, 150)}${(p.descricao || "").length > 150 ? '...' : ''}</div>
-                        <div class="price">${precoFormatado || "R$ 0,00"}</div>
-                        <a href="${p.link || "#"}" target="_blank" rel="noopener noreferrer nofollow" class="buy-btn">👉 COMPRAR AGORA</a>
-                    </div>
-                </div>
-            `;
+            let badgeStyle = '';
+            if (badge.classe === 'amazon') badgeStyle = 'background:#FF9900;color:#232F3E';
+            else if (badge.classe === 'mercadolivre') badgeStyle = 'background:#FFE600;color:#1a1a1a';
+            else if (badge.classe === 'shopee') badgeStyle = 'background:#EE4D2D;color:white';
+            html += `<div class="product-card"><div class="favorite-icon" onclick="toggleFavorito('${p.id}')">${isFav ? '❤️' : '🤍'}</div>${criarCarrossel(p.id, imagens)}<div class="product-info"><span class="store-badge" style="${badgeStyle}">${badge.icon} ${badge.nome}</span><div class="product-title">${p.nome || "Produto"}</div><div class="product-desc">${p.descricao || "Sem descrição"}</div><div class="price">${precoFormatado || "R$ 0,00"}</div><a href="${p.link || "#"}" target="_blank" rel="noopener noreferrer nofollow" class="buy-btn">👉 COMPRAR AGORA</a></div></div>`;
         }
         container.innerHTML = html;
-        for (let p of produtosFiltrados) {
-            const imagens = [p.imagens_1, p.imagens_2, p.imagens_3].filter(img => img && img.trim() !== "");
-            if (imagens.length > 1) ativarCarrossel(p.id, imagens);
-        }
+        document.querySelectorAll('.product-card .carousel-container').forEach(el => {
+            const id = el.getAttribute('data-id');
+            const produto = filtrados.find(p => p.id == id);
+            if (produto) {
+                const imagens = [produto.imagens_1, produto.imagens_2, produto.imagens_3].filter(img => img && img.trim());
+                ativarCarrosselProduto(el, imagens);
+            }
+        });
     }
 
-    async function carregarProdutos() {
-        try {
-            container.innerHTML = `<div class="loading">📡 Carregando produtos...</div>`;
-            const resposta = await fetch(API_URL);
-            if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
-            const dados = await resposta.json();
+    function atualizarBotoesFiltro() {
+        document.querySelectorAll('#categoryFilter .filter-chip').forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-cat') === categoriaAtiva));
+        document.querySelectorAll('#storeFilter .filter-chip').forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-store') === lojaAtiva));
+    }
+
+    function carregarProdutos() {
+        fetch(API_URL).then(res => res.json()).then(dados => {
             produtosOriginais = dados.filter(item => item.nome && item.nome.trim() !== "" && item.link && item.link.trim() !== "");
             produtosOriginais.forEach((p, idx) => { if (!p.id) p.id = `prod_${idx}`; });
             carregarFavoritos();
+            const produtosOrdenados = [...produtosOriginais].sort((a,b) => (b.id || 0) - (a.id || 0));
+            featuredProdutos = produtosOrdenados.slice(0, 6);
+            initFeaturedCarousel();
+            const cats = new Set(produtosOriginais.map(p => p.categoria).filter(Boolean));
+            const stores = new Set(produtosOriginais.map(p => p.loja).filter(Boolean));
+            categoryFilterDiv.innerHTML = '<button class="filter-chip active" data-cat="todos">📦 Todos</button>' + Array.from(cats).map(c => `<button class="filter-chip" data-cat="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</button>`).join('');
+            storeFilterDiv.innerHTML = '<button class="filter-chip active" data-store="todas">🛒 Todas</button>' + Array.from(stores).map(s => `<button class="filter-chip" data-store="${s}">${s}</button>`).join('');
+            document.querySelectorAll('#categoryFilter .filter-chip').forEach(btn => btn.addEventListener('click', function() { categoriaAtiva = this.getAttribute('data-cat'); atualizarBotoesFiltro(); renderizarProdutos(); updateURL(); closeDrawer(); }));
+            document.querySelectorAll('#storeFilter .filter-chip').forEach(btn => btn.addEventListener('click', function() { lojaAtiva = this.getAttribute('data-store'); atualizarBotoesFiltro(); renderizarProdutos(); updateURL(); closeDrawer(); }));
             renderizarProdutos();
-            atualizarBotoesAtivos();
+            getParamsFromURL();
+            atualizarBotoesFiltro();
             updateURL();
-        } catch (erro) {
-            console.error("Erro:", erro);
-            container.innerHTML = `<div class="empty-message">❌ Erro ao carregar produtos. Tente novamente mais tarde.</div>`;
-        }
+        }).catch(erro => { console.error("Erro:", erro); container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">❌ Erro ao carregar produtos. Tente novamente mais tarde.</div>'; });
     }
 
     function updateURL() {
@@ -824,87 +421,27 @@
         const cat = urlParams.get('categoria');
         const loja = urlParams.get('loja');
         const busca = urlParams.get('busca');
-        if (cat && cat !== 'todos') {
-            const btn = document.querySelector(`.cat-btn[data-cat="${cat}"]`);
-            if (btn) categoriaAtiva = cat;
-        }
-        if (loja && loja !== 'todas') {
-            const btn = document.querySelector(`.store-btn[data-store="${loja}"]`);
-            if (btn) lojaAtiva = loja;
-        }
-        if (busca && busca.trim() !== "") {
-            termoBusca = busca.trim();
-            if (searchInput) searchInput.value = termoBusca;
-        }
+        if (cat && cat !== 'todos') { const btn = document.querySelector(`#categoryFilter .filter-chip[data-cat="${cat}"]`); if (btn) categoriaAtiva = cat; }
+        if (loja && loja !== 'todas') { const btn = document.querySelector(`#storeFilter .filter-chip[data-store="${loja}"]`); if (btn) lojaAtiva = loja; }
+        if (busca && busca.trim() !== "") { termoBusca = busca.trim(); searchInput.value = termoBusca; }
     }
 
-    function atualizarBotoesAtivos() {
-        document.querySelectorAll("#categoryFilter .cat-btn").forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-cat') === categoriaAtiva));
-        document.querySelectorAll("#storeFilter .store-btn").forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-store') === lojaAtiva));
-    }
+    searchInput.addEventListener('input', e => { termoBusca = e.target.value; renderizarProdutos(); updateURL(); });
+    minPriceInput.addEventListener('input', () => { precoMin = parseFloat(minPriceInput.value) || 0; renderizarProdutos(); });
+    maxPriceInput.addEventListener('input', () => { precoMax = parseFloat(maxPriceInput.value) || 999999; renderizarProdutos(); });
+    clearPriceBtn.addEventListener('click', () => { minPriceInput.value = 0; maxPriceInput.value = 999999; precoMin = 0; precoMax = 999999; renderizarProdutos(); });
+    sortAlphaBtn.addEventListener('click', () => { ordenacaoAtiva = true; renderizarProdutos(); });
+    clearSortBtn.addEventListener('click', () => { ordenacaoAtiva = false; renderizarProdutos(); });
+    showFavoritesBtn.addEventListener('click', () => { modoFavoritos = true; renderizarProdutos(); closeDrawer(); });
+    showAllBtn.addEventListener('click', () => { modoFavoritos = false; renderizarProdutos(); closeDrawer(); });
+    document.getElementById('openPrivacy')?.addEventListener('click', (e) => { e.preventDefault(); openModal('Política de Privacidade', 'Não armazenamos dados bancários ou informações sensíveis. Seus favoritos são salvos apenas no seu navegador. Os links direcionam para lojas oficiais (Amazon, Mercado Livre, Shopee) que possuem suas próprias políticas de privacidade e segurança.'); });
+    document.getElementById('openTerms')?.addEventListener('click', (e) => { e.preventDefault(); openModal('Termos de Uso', 'Ao utilizar este site, você concorda que os links são de afiliado e que as compras são realizadas diretamente nas lojas parceiras. Não nos responsabilizamos por eventuais problemas com entrega, qualidade ou trocas, pois essas são de responsabilidade exclusiva das lojas onde a compra foi efetuada.'); });
 
-    function setupFiltros() {
-        document.querySelectorAll("#categoryFilter .cat-btn").forEach(btn => {
-            btn.addEventListener("click", function() {
-                categoriaAtiva = this.getAttribute("data-cat");
-                renderizarProdutos();
-                atualizarBotoesAtivos();
-                updateURL();
-            });
-        });
-        document.querySelectorAll("#storeFilter .store-btn").forEach(btn => {
-            btn.addEventListener("click", function() {
-                lojaAtiva = this.getAttribute("data-store");
-                renderizarProdutos();
-                atualizarBotoesAtivos();
-                updateURL();
-            });
-        });
-        searchInput.addEventListener("input", e => {
-            termoBusca = e.target.value;
-            renderizarProdutos();
-            updateURL();
-        });
-        minPriceInput.addEventListener("input", () => {
-            precoMin = parseFloat(minPriceInput.value) || 0;
-            renderizarProdutos();
-        });
-        maxPriceInput.addEventListener("input", () => {
-            precoMax = parseFloat(maxPriceInput.value) || 999999;
-            renderizarProdutos();
-        });
-        clearPriceBtn.addEventListener("click", () => {
-            minPriceInput.value = 0;
-            maxPriceInput.value = 999999;
-            precoMin = 0;
-            precoMax = 999999;
-            renderizarProdutos();
-        });
-        sortAlphaBtn.addEventListener("click", () => {
-            ordenacaoAtiva = true;
-            renderizarProdutos();
-        });
-        clearSortBtn.addEventListener("click", () => {
-            ordenacaoAtiva = false;
-            renderizarProdutos();
-        });
-        showFavoritesBtn.addEventListener("click", () => {
-            modoFavoritos = true;
-            renderizarProdutos();
-        });
-        showAllBtn.addEventListener("click", () => {
-            modoFavoritos = false;
-            renderizarProdutos();
-        });
-    }
+    prevFeaturedBtn.addEventListener('click', () => { prevFeatured(); resetAutoScroll(); });
+    nextFeaturedBtn.addEventListener('click', () => { nextFeatured(); resetAutoScroll(); });
+    window.addEventListener('resize', () => updateFeaturedSlidePosition());
 
-    function init() {
-        getParamsFromURL();
-        setupFiltros();
-        carregarProdutos();
-    }
-    window.toggleFavorito = toggleFavorito;
-    init();
+    carregarProdutos();
 </script>
 </body>
 </html>
