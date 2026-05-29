@@ -4,85 +4,483 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Missio Promoções | Ofertas seguras em um só lugar</title>
-    <meta name="description" content="Encontre as melhores ofertas e produtos com preços incríveis da Amazon, Mercado Livre e Shopee. Links oficiais e compra 100% segura.">
     <style>
-        /* (mesmo CSS anterior, sem alterações) */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #f8fafc; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.5; color: #0f172a; padding: 1.5rem 1rem 3rem; }
-        .container { max-width: 1280px; margin: 0 auto; }
-        .hero { background: white; border-radius: 1.5rem; padding: 1.2rem 1.5rem; margin-bottom: 1.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; text-align: center; }
-        .main-title { font-size: 1.35rem; font-weight: 800; background: linear-gradient(135deg, #FF5E00, #FF8C40); background-clip: text; -webkit-background-clip: text; color: transparent; margin-bottom: 0.5rem; letter-spacing: -0.3px; }
-        .security-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin: 0.75rem 0 1rem; }
-        .security-badge { background: #f8fafc; padding: 0.3rem 0.9rem; border-radius: 40px; font-size: 0.7rem; font-weight: 600; color: #1e293b; display: inline-flex; align-items: center; gap: 0.4rem; border: 1px solid #e2e8f0; }
-        .contact-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-top: 0.5rem; }
-        .contact-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: #f1f5f9; padding: 0.5rem 1.2rem; border-radius: 40px; text-decoration: none; font-weight: 600; font-size: 0.8rem; transition: all 0.2s; color: #1e293b; }
-        .contact-btn.instagram { background: linear-gradient(45deg, #f09433, #d62976, #962fbf); color: white; }
-        .contact-btn.whatsapp { background: #25D366; color: white; }
-        .contact-btn.whatsapp span { font-weight: normal; font-size: 0.7rem; background: rgba(255,255,255,0.2); border-radius: 30px; padding: 0.1rem 0.5rem; margin-left: 0.3rem; }
-        .contact-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .info-section { background: white; border-radius: 1rem; padding: 1.2rem 1.5rem; margin-bottom: 1.8rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; text-align: center; }
-        .info-title { font-weight: 700; font-size: 1rem; color: #FF5E00; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-        .info-text { font-size: 0.85rem; color: #334155; margin-bottom: 0.5rem; }
-        .info-highlight { background: #fff0e6; padding: 0.5rem; border-radius: 1rem; font-size: 0.8rem; color: #c2410c; font-weight: 500; }
-        .search-filter-bar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.8rem; flex-wrap: wrap; }
-        .search-box { flex: 1; position: relative; }
-        .search-box input { width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; border: 1px solid #cbd5e1; border-radius: 2rem; font-size: 0.9rem; background: white; transition: all 0.2s; }
-        .search-box input:focus { border-color: #FF5E00; outline: none; box-shadow: 0 0 0 2px rgba(255,94,0,0.2); }
-        .search-icon { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1rem; }
-        .filter-icon { background: #FF5E00; color: white; border: none; border-radius: 2rem; padding: 0.7rem 1.5rem; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
-        .filter-icon:hover { background: #e04e00; }
-        .featured-section { background: white; border-radius: 1rem; padding: 1rem; margin-bottom: 1.8rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-        .featured-title { font-weight: 700; font-size: 1rem; color: #FF5E00; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
-        .featured-carousel { position: relative; overflow: hidden; border-radius: 1rem; }
-        .carousel-track { display: flex; transition: transform 0.4s ease-in-out; }
-        .carousel-slide-featured { flex: 0 0 100%; background: #f8fafc; border-radius: 1rem; overflow: hidden; display: flex; flex-direction: column; }
-        .featured-link { text-decoration: none; color: inherit; display: flex; flex-direction: column; cursor: pointer; }
-        .featured-img { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: #fff; padding: 1rem; }
-        .featured-info { padding: 0.75rem; text-align: center; }
-        .featured-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .featured-price { font-weight: 700; color: #FF5E00; font-size: 1rem; }
-        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: none; color: white; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; transition: background 0.2s; }
-        .carousel-btn:hover { background: rgba(0,0,0,0.8); }
-        .btn-prev-featured { left: 0.5rem; }
-        .btn-next-featured { right: 0.5rem; }
-        .carousel-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.75rem; }
-        .dot-featured { width: 8px; height: 8px; background: #cbd5e1; border-radius: 50%; cursor: pointer; transition: all 0.2s; }
-        .dot-featured.active { background: #FF5E00; width: 20px; border-radius: 10px; }
-        @media (min-width: 640px) { .carousel-slide-featured { flex: 0 0 50%; } }
-        @media (min-width: 768px) { .carousel-slide-featured { flex: 0 0 33.333%; } }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-        .product-card { background: white; border-radius: 1rem; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; position: relative; display: flex; flex-direction: column; }
-        .product-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
-        .favorite-icon { position: absolute; top: 0.75rem; right: 0.75rem; background: rgba(255,255,255,0.9); border-radius: 9999px; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 1.25rem; transition: transform 0.2s; }
-        .carousel-container { position: relative; aspect-ratio: 1 / 1; background: #f8fafc; overflow: hidden; }
-        .carousel-slides { display: flex; width: 100%; height: 100%; transition: transform 0.3s ease; }
-        .carousel-slide { flex: 0 0 100%; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f8fafc; }
-        .carousel-slide img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: 0 auto; }
-        .carousel-btn-product { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: none; color: white; width: 1.75rem; height: 1.75rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
-        .product-info { padding: 1rem; flex: 1; display: flex; flex-direction: column; }
-        .store-badge { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.7rem; font-weight: 600; padding: 0.25rem 0.5rem; border-radius: 0.375rem; margin-bottom: 0.5rem; width: fit-content; }
-        .product-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; line-height: 1.4; }
-        .product-desc { font-size: 0.8rem; color: #475569; margin-bottom: 0.75rem; line-height: 1.45; white-space: normal; word-wrap: break-word; }
-        .price { font-size: 1.25rem; font-weight: 700; color: #FF5E00; margin-bottom: 1rem; }
-        .buy-btn { background: linear-gradient(95deg, #FF5E00, #FF8C40); color: white; text-align: center; padding: 0.625rem; border-radius: 9999px; font-weight: 600; text-decoration: none; transition: all 0.1s ease; display: block; cursor: pointer; }
-        .buy-btn:active { transform: scale(0.98); background: #e04e00; }
-        .footer { margin-top: 2rem; text-align: center; font-size: 0.75rem; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 2rem; }
-        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-        .filters-drawer { position: fixed; top: 0; left: -320px; width: 320px; height: 100%; background: white; z-index: 1000; transition: left 0.3s ease; box-shadow: 2px 0 8px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow-y: auto; border-right: 1px solid #e2e8f0; }
-        .filters-drawer.open { left: 0; }
-        .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #e2e8f0; font-weight: 700; background: white; position: sticky; top: 0; }
-        .close-drawer { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #64748b; }
-        .drawer-content { padding: 1rem; flex: 1; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
-        .overlay.show { display: block; }
-        .filter-group { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #eef2f6; }
-        .filter-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #475569; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
-        .categories-list, .stores-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .filter-chip { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 0.4rem 0.9rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 500; cursor: pointer; transition: all 0.2s; color: #334155; }
-        .filter-chip.active { background: #FF5E00; border-color: #FF5E00; color: white; }
-        .price-inputs { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
-        .price-inputs input { flex: 1; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 0.5rem; font-size: 0.8rem; }
-        .sort-btn, .favorite-btn { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.7rem; font-weight: 600; cursor: pointer; width: 100%; text-align: center; margin-top: 0.5rem; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f8fafc;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+            color: #0f172a;
+            padding: 1.5rem 1rem 3rem;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* Cabeçalho */
+        .hero {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .main-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF5E00, #FF8C40);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.3px;
+        }
+        .security-strip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 0.75rem 0 1rem;
+        }
+        .security-badge {
+            background: #f8fafc;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #1e293b;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: 1px solid #e2e8f0;
+        }
+        .contact-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #f1f5f9;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            color: #1e293b;
+        }
+        .contact-btn.instagram {
+            background: linear-gradient(45deg, #f09433, #d62976, #962fbf);
+            color: white;
+        }
+        .contact-btn.whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        .contact-btn.whatsapp span {
+            font-weight: normal;
+            font-size: 0.7rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 0.1rem 0.5rem;
+            margin-left: 0.3rem;
+        }
+        .info-section {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .info-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #FF5E00;
+            margin-bottom: 0.5rem;
+        }
+        .info-text {
+            font-size: 0.85rem;
+            color: #334155;
+            margin-bottom: 0.5rem;
+        }
+        .info-highlight {
+            background: #fff0e6;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            color: #c2410c;
+            font-weight: 500;
+        }
+
+        /* Bloco de filtros (agora com busca inclusa) */
+        .filters-block {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .search-box {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            background: white;
+        }
+        .search-box input:focus {
+            border-color: #FF5E00;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255,94,0,0.2);
+        }
+        .search-icon {
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+        .filter-group {
+            margin-bottom: 1.25rem;
+        }
+        .filter-group:last-child {
+            margin-bottom: 0;
+        }
+        .filter-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #475569;
+            margin-bottom: 0.75rem;
+        }
+        .categories-list, .stores-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .filter-chip {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 0.4rem 0.9rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #334155;
+        }
+        .filter-chip.active {
+            background: #FF5E00;
+            border-color: #FF5E00;
+            color: white;
+        }
+        .price-inputs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .price-inputs input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .filter-btn {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        .favorite-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .favorite-buttons button {
+            flex: 1;
+        }
+
+        /* Carrossel automático */
+        .featured-carousel {
+            background: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+        }
+        .carousel-slide {
+            flex: 0 0 100%;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .carousel-slide a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+        .carousel-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: contain;
+            background: white;
+            padding: 1rem;
+        }
+        .carousel-info {
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .carousel-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .carousel-price {
+            font-weight: 700;
+            color: #FF5E00;
+            font-size: 1rem;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            border: none;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+            transition: background 0.2s;
+        }
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .btn-prev {
+            left: 0.5rem;
+        }
+        .btn-next {
+            right: 0.5rem;
+        }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dot.active {
+            background: #FF5E00;
+            width: 20px;
+            border-radius: 10px;
+        }
+
+        /* Grade de produtos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .product-card {
+            background: white;
+            border-radius: 1.2rem;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid #eef2f6;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+        }
+        .badge-group {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .verified-badge {
+            background: #10b981;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.25rem 0.7rem;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            width: fit-content;
+        }
+        .favorite-icon {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 9999px;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1.25rem;
+        }
+        .product-img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            overflow: hidden;
+        }
+        .product-img img {
+            max-width: 90%;
+            max-height: 90%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+        .product-info {
+            padding: 1rem 1rem 1.2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid #f1f5f9;
+        }
+        .store-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            margin-bottom: 0.6rem;
+            width: fit-content;
+        }
+        .store-badge.amazon { background: #FF9900; color: #232F3E; }
+        .store-badge.mercadolivre { background: #FFE600; color: #1a1a1a; }
+        .store-badge.shopee { background: #EE4D2D; color: white; }
+        .product-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            line-height: 1.35;
+            margin-bottom: 0.4rem;
+            color: #0f172a;
+        }
+        .product-desc {
+            font-size: 0.75rem;
+            color: #475569;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            white-space: normal;
+            word-break: break-word;
+        }
+        .price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .current-price {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #FF5E00;
+        }
+        .buy-btn {
+            background: linear-gradient(95deg, #FF5E00, #FF8C40);
+            color: white;
+            text-align: center;
+            padding: 0.7rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: block;
+            margin-top: 0.5rem;
+        }
+        .footer {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 2rem;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
     </style>
 </head>
 <body>
@@ -102,29 +500,53 @@
     </div>
 
     <div class="info-section">
-        <div class="info-title"><span>🤝</span> Como funciona? <span>🔐</span></div>
+        <div class="info-title">🤝 Como funciona? 🔐</div>
         <div class="info-text">Aqui você encontra os melhores produtos da <strong>Amazon, Mercado Livre e Shopee</strong>, tudo em um só lugar. Ao clicar em "COMPRAR AGORA", você será redirecionado para a loja oficial e fará sua compra com total segurança.</div>
         <div class="info-highlight">💡 <strong>Você paga o mesmo preço!</strong> Utilizamos links de afiliado, mas o valor do produto não muda para você.</div>
     </div>
 
-    <div class="search-filter-bar">
+    <!-- Bloco de filtros (com busca, categorias, lojas, preço, favoritos) -->
+    <div class="filters-block">
         <div class="search-box">
             <span class="search-icon">🔍</span>
             <input type="text" id="searchInput" placeholder="Buscar produto...">
         </div>
-        <button class="filter-icon" id="openFiltersBtn">🧹 Filtrar</button>
-    </div>
-
-    <div class="featured-section" id="featuredSection" style="display: none;">
-        <div class="featured-title"><span>🔥 Destaques & Novidades</span><span style="font-size:0.7rem;">⚡ Ofertas imperdíveis</span></div>
-        <div class="featured-carousel">
-            <div class="carousel-track" id="featuredTrack"></div>
-            <button class="carousel-btn btn-prev-featured" id="prevFeatured">‹</button>
-            <button class="carousel-btn btn-next-featured" id="nextFeatured">›</button>
+        <div class="filter-group">
+            <div class="filter-title">📂 CATEGORIAS</div>
+            <div class="categories-list" id="categoryFilter"></div>
         </div>
-        <div class="carousel-dots" id="featuredDots"></div>
+        <div class="filter-group">
+            <div class="filter-title">🏪 LOJAS / VITRINES</div>
+            <div class="stores-list" id="storeFilter"></div>
+        </div>
+        <div class="filter-group">
+            <div class="filter-title">💰 FILTRAR POR PREÇO</div>
+            <div class="price-inputs">
+                <input type="number" id="minPrice" placeholder="Mínimo" step="1" value="0">
+                <input type="number" id="maxPrice" placeholder="Máximo" step="1" value="999999">
+            </div>
+            <button id="clearPriceBtn" class="filter-btn">Limpar filtro</button>
+        </div>
+        <div class="filter-group">
+            <div class="filter-title">⭐ SEUS FAVORITOS</div>
+            <div class="favorite-buttons">
+                <button id="showFavoritesBtn" class="filter-btn">❤️ Ver favoritos</button>
+                <button id="showAllBtn" class="filter-btn">🔄 Mostrar todos</button>
+            </div>
+        </div>
     </div>
 
+    <!-- Carrossel automático de destaques -->
+    <div class="featured-carousel" id="featuredCarousel" style="display: none;">
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack"></div>
+            <button class="carousel-btn btn-prev" id="prevBtn">‹</button>
+            <button class="carousel-btn btn-next" id="nextBtn">›</button>
+        </div>
+        <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+
+    <!-- Grade de produtos -->
     <div class="products-grid" id="productsContainer">
         <div style="grid-column:1/-1; text-align:center; padding:2rem;">📡 Carregando produtos...</div>
     </div>
@@ -138,60 +560,37 @@
     </div>
 </div>
 
-<div class="overlay" id="overlay"></div>
-<div class="filters-drawer" id="filtersDrawer">
-    <div class="drawer-header"><span>📋 Filtros</span><button class="close-drawer" id="closeFiltersBtn">✕</button></div>
-    <div class="drawer-content">
-        <div class="filter-group"><div class="filter-title">📂 CATEGORIAS</div><div class="categories-list" id="categoryFilter"></div></div>
-        <div class="filter-group"><div class="filter-title">🏪 LOJAS / VITRINES</div><div class="stores-list" id="storeFilter"></div></div>
-        <div class="filter-group"><div class="filter-title">💰 FILTRAR POR PREÇO</div><div class="price-range"><div class="price-inputs"><input type="number" id="minPrice" placeholder="Mínimo" step="1" value="0"><input type="number" id="maxPrice" placeholder="Máximo" step="1" value="999999"></div><button id="clearPriceBtn" class="sort-btn">Limpar filtro</button></div></div>
-        <div class="filter-group"><div class="filter-title">📋 ORDENAR PRODUTOS</div><button id="sortAlphaBtn" class="sort-btn">🔤 A–Z (Nome)</button><button id="clearSortBtn" class="sort-btn">Limpar ordenação</button></div>
-        <div class="filter-group"><div class="filter-title">⭐ SEUS FAVORITOS</div><button id="showFavoritesBtn" class="favorite-btn">❤️ Ver favoritos</button><button id="showAllBtn" class="favorite-btn">🔄 Mostrar todos</button></div>
-    </div>
-</div>
-
 <script>
     const API_URL = 'https://sheetdb.io/api/v1/b8497l310h84g';
+
     let produtosOriginais = [];
     let categoriaAtiva = "todos";
     let lojaAtiva = "todas";
     let termoBusca = "";
     let favoritos = new Set();
     let modoFavoritos = false;
-    let ordenacaoAtiva = false;
     let precoMin = 0;
     let precoMax = 999999;
+
+    // Carrossel
+    let carouselProdutos = [];
+    let carouselIndex = 0;
+    let carouselInterval;
+    const carouselContainer = document.getElementById("featuredCarousel");
+    const carouselTrack = document.getElementById("carouselTrack");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const dotsContainer = document.getElementById("carouselDots");
 
     const container = document.getElementById("productsContainer");
     const searchInput = document.getElementById("searchInput");
     const minPriceInput = document.getElementById("minPrice");
     const maxPriceInput = document.getElementById("maxPrice");
-    const sortAlphaBtn = document.getElementById("sortAlphaBtn");
-    const clearSortBtn = document.getElementById("clearSortBtn");
     const clearPriceBtn = document.getElementById("clearPriceBtn");
     const showFavoritesBtn = document.getElementById("showFavoritesBtn");
     const showAllBtn = document.getElementById("showAllBtn");
     const categoryFilterDiv = document.getElementById("categoryFilter");
     const storeFilterDiv = document.getElementById("storeFilter");
-
-    const drawer = document.getElementById("filtersDrawer");
-    const overlay = document.getElementById("overlay");
-    const openBtn = document.getElementById("openFiltersBtn");
-    const closeBtn = document.getElementById("closeFiltersBtn");
-    function openDrawer() { drawer.classList.add("open"); overlay.classList.add("show"); }
-    function closeDrawer() { drawer.classList.remove("open"); overlay.classList.remove("show"); }
-    openBtn?.addEventListener("click", openDrawer);
-    closeBtn?.addEventListener("click", closeDrawer);
-    overlay?.addEventListener("click", closeDrawer);
-
-    let featuredProdutos = [];
-    let featuredIndex = 0;
-    let featuredInterval;
-    const featuredSection = document.getElementById("featuredSection");
-    const featuredTrack = document.getElementById("featuredTrack");
-    const prevFeaturedBtn = document.getElementById("prevFeatured");
-    const nextFeaturedBtn = document.getElementById("nextFeatured");
-    const dotsContainer = document.getElementById("featuredDots");
 
     function getStoreBadge(loja) {
         const lojaLower = (loja || "").toLowerCase();
@@ -206,11 +605,6 @@
         let num = precoStr.replace(/R\$/, '').replace(/\./g, '').replace(',', '.').trim();
         let valor = parseFloat(num);
         return isNaN(valor) ? 0 : valor;
-    }
-
-    function aplicarOrdenacao(lista) {
-        if (!ordenacaoAtiva) return lista;
-        return [...lista].sort((a, b) => (a.nome || "").localeCompare(b.nome || "", "pt"));
     }
 
     function carregarFavoritos() {
@@ -239,102 +633,23 @@
         modal.style.alignItems = 'center';
         modal.style.justifyContent = 'center';
         modal.style.zIndex = '1000';
-        modal.innerHTML = `<div style="background:white; max-width:90%; width:500px; border-radius:32px; padding:24px;"><h3 style="color:#FF5E00; margin-bottom:16px;">${title}</h3><p style="font-size:0.85rem; color:#333;">${content}</p><button id="closeModalBtn" style="margin-top:20px; background:#FF5E00; color:white; border:none; padding:10px 20px; border-radius:40px;">Fechar</button></div>`;
+        modal.innerHTML = `
+            <div style="background:white; max-width:90%; width:500px; border-radius:32px; padding:24px;">
+                <h3 style="color:#FF5E00; margin-bottom:16px;">${title}</h3>
+                <p style="font-size:0.85rem; color:#333;">${content}</p>
+                <button id="closeModalBtn" style="margin-top:20px; background:#FF5E00; color:white; border:none; padding:10px 20px; border-radius:40px; cursor:pointer;">Fechar</button>
+            </div>
+        `;
         document.body.appendChild(modal);
         document.getElementById('closeModalBtn').onclick = () => modal.remove();
         modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
     }
 
-    function criarCarrossel(id, imagens) {
-        if (!imagens || imagens.length === 0) imagens = ["https://placehold.co/600x400/e2e8f0/FF5E00?text=Missio+Promo%C3%A7%C3%B5es"];
-        const slidesHtml = imagens.map((img, idx) => `<div class="carousel-slide"><img src="${img}" alt="Foto ${idx+1}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Erro'"></div>`).join('');
-        let dotsHtml = '', btnsHtml = '';
-        if (imagens.length > 1) {
-            for (let i = 0; i < imagens.length; i++) dotsHtml += `<span class="dot" data-index="${i}"></span>`;
-            btnsHtml = `<button class="carousel-btn-product prev">‹</button><button class="carousel-btn-product next">›</button><div class="carousel-dots" style="position:absolute; bottom:0.5rem; left:0; right:0; display:flex; justify-content:center; gap:0.5rem; z-index:10;">${dotsHtml}</div>`;
-        }
-        return `<div class="carousel-container" data-id="${id}"><div class="carousel-slides" style="display:flex; width:100%; height:100%; transition:transform 0.3s;">${slidesHtml}</div>${btnsHtml}</div>`;
-    }
-
-    function ativarCarrosselProduto(containerEl, imagens) {
-        if (!containerEl || imagens.length <= 1) return;
-        const slidesDiv = containerEl.querySelector('.carousel-slides');
-        const prevBtn = containerEl.querySelector('.prev');
-        const nextBtn = containerEl.querySelector('.next');
-        const dots = containerEl.querySelectorAll('.dot');
-        let currentIndex = 0;
-        const total = imagens.length;
-        function update(i) {
-            i = Math.max(0, Math.min(i, total - 1));
-            currentIndex = i;
-            slidesDiv.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentIndex));
-        }
-        function next() { update(currentIndex + 1); }
-        function prev() { update(currentIndex - 1); }
-        prevBtn?.addEventListener('click', prev);
-        nextBtn?.addEventListener('click', next);
-        dots.forEach((dot, idx) => dot.addEventListener('click', () => update(idx)));
-        let startX = 0;
-        containerEl.addEventListener('touchstart', e => { startX = e.changedTouches[0].screenX; }, { passive: true });
-        containerEl.addEventListener('touchend', e => {
-            const endX = e.changedTouches[0].screenX;
-            if (endX < startX - 30) next();
-            if (endX > startX + 30) prev();
-        });
-        update(0);
-    }
-
-    function initFeaturedCarousel() {
-        if (!featuredProdutos.length) { featuredSection.style.display = 'none'; return; }
-        featuredSection.style.display = 'block';
-        featuredTrack.innerHTML = '';
-        featuredProdutos.forEach((prod, idx) => {
-            const badge = getStoreBadge(prod.loja);
-            let precoFormatado = prod.preco;
-            if (precoFormatado && !precoFormatado.includes('R$')) {
-                const precoNum = parseFloat(precoFormatado.toString().replace(',', '.'));
-                if (!isNaN(precoNum)) precoFormatado = `R$ ${precoNum.toFixed(2).replace('.', ',')}`;
-            }
-            const slide = document.createElement('div');
-            slide.className = 'carousel-slide-featured';
-            slide.innerHTML = `<a href="${prod.link || "#"}" target="_blank" rel="noopener noreferrer nofollow" class="featured-link"><img class="featured-img" src="${(prod.imagens_1 && prod.imagens_1.trim()) ? prod.imagens_1 : 'https://placehold.co/600x400/e2e8f0/FF5E00?text=Sem+imagem'}" alt="${prod.nome}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Erro'"><div class="featured-info"><div class="featured-name">${prod.nome || "Produto"}</div><div class="featured-price">${precoFormatado || "R$ 0,00"}</div><span class="store-badge" style="${badge.classe === 'amazon' ? 'background:#FF9900;color:#232F3E' : badge.classe === 'mercadolivre' ? 'background:#FFE600;color:#1a1a1a' : badge.classe === 'shopee' ? 'background:#EE4D2D;color:white' : ''}">${badge.icon} ${badge.nome}</span></div></a>`;
-            featuredTrack.appendChild(slide);
-        });
-        dotsContainer.innerHTML = '';
-        for (let i = 0; i < featuredProdutos.length; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('dot-featured');
-            if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => goToFeaturedSlide(i));
-            dotsContainer.appendChild(dot);
-        }
-        updateFeaturedSlidePosition();
-        startAutoScroll();
-    }
-
-    function updateFeaturedSlidePosition() {
-        const slideWidth = featuredTrack.children[0]?.offsetWidth || 0;
-        featuredTrack.style.transform = `translateX(-${featuredIndex * slideWidth}px)`;
-        document.querySelectorAll('.dot-featured').forEach((dot, i) => dot.classList.toggle('active', i === featuredIndex));
-    }
-
-    function goToFeaturedSlide(index) {
-        featuredIndex = Math.min(Math.max(0, index), featuredProdutos.length - 1);
-        updateFeaturedSlidePosition();
-        resetAutoScroll();
-    }
-
-    function nextFeatured() { goToFeaturedSlide(featuredIndex + 1); }
-    function prevFeatured() { goToFeaturedSlide(featuredIndex - 1); }
-
-    let autoScrollInterval;
-    function startAutoScroll() { if (autoScrollInterval) clearInterval(autoScrollInterval); if (featuredProdutos.length > 1) { autoScrollInterval = setInterval(() => nextFeatured(), 4000); } }
-    function resetAutoScroll() { if (autoScrollInterval) { clearInterval(autoScrollInterval); startAutoScroll(); } }
-
-    function renderizarProdutos() {
+    function filtrarProdutos() {
         let filtrados = [...produtosOriginais];
-        if (categoriaAtiva !== "todos") filtrados = filtrados.filter(p => (p.categoria || "").toLowerCase() === categoriaAtiva.toLowerCase());
+        if (categoriaAtiva !== "todos") {
+            filtrados = filtrados.filter(p => (p.categoria || "").toLowerCase() === categoriaAtiva.toLowerCase());
+        }
         if (lojaAtiva !== "todas") {
             filtrados = filtrados.filter(p => {
                 const lojaProduto = (p.loja || "").toLowerCase();
@@ -348,61 +663,140 @@
             const busca = termoBusca.toLowerCase();
             filtrados = filtrados.filter(p => (p.nome || "").toLowerCase().includes(busca) || (p.descricao || "").toLowerCase().includes(busca));
         }
-        filtrados = filtrados.filter(p => { const valor = extrairNumeroPreco(p.preco); return valor >= precoMin && valor <= precoMax; });
+        filtrados = filtrados.filter(p => {
+            const valor = extrairNumeroPreco(p.preco);
+            return valor >= precoMin && valor <= precoMax;
+        });
         if (modoFavoritos) filtrados = filtrados.filter(p => favoritos.has(p.id));
-        filtrados = aplicarOrdenacao(filtrados);
-        if (filtrados.length === 0) { container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">😕 Nenhum produto encontrado.</div>'; return; }
+        return filtrados;
+    }
+
+    function renderizarProdutos() {
+        const filtrados = filtrarProdutos();
+        if (filtrados.length === 0) {
+            container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">😕 Nenhum produto encontrado.</div>';
+            return;
+        }
         let html = "";
         for (let p of filtrados) {
             const badge = getStoreBadge(p.loja);
-            const imagens = [p.imagens_1, p.imagens_2, p.imagens_3].filter(img => img && img.trim());
             let precoFormatado = p.preco;
             if (precoFormatado && !precoFormatado.includes('R$')) {
                 const precoNum = parseFloat(precoFormatado.toString().replace(',', '.'));
                 if (!isNaN(precoNum)) precoFormatado = `R$ ${precoNum.toFixed(2).replace('.', ',')}`;
+            }
+
+            let imagemProduto = "https://placehold.co/600x400/e2e8f0/FF5E00?text=Missio+Promo%C3%A7%C3%B5es";
+            if (p.imagens_1 && p.imagens_1.trim() !== "") {
+                imagemProduto = p.imagens_1;
             }
             const isFav = favoritos.has(p.id);
             let badgeStyle = '';
             if (badge.classe === 'amazon') badgeStyle = 'background:#FF9900;color:#232F3E';
             else if (badge.classe === 'mercadolivre') badgeStyle = 'background:#FFE600;color:#1a1a1a';
             else if (badge.classe === 'shopee') badgeStyle = 'background:#EE4D2D;color:white';
-            html += `<div class="product-card"><div class="favorite-icon" onclick="toggleFavorito('${p.id}')">${isFav ? '❤️' : '🤍'}</div>${criarCarrossel(p.id, imagens)}<div class="product-info"><span class="store-badge" style="${badgeStyle}">${badge.icon} ${badge.nome}</span><div class="product-title">${p.nome || "Produto"}</div><div class="product-desc">${p.descricao || "Sem descrição"}</div><div class="price">${precoFormatado || "R$ 0,00"}</div><a href="${p.link || "#"}" target="_blank" rel="noopener noreferrer nofollow" class="buy-btn">👉 COMPRAR AGORA</a></div></div>`;
+
+            html += `
+                <div class="product-card">
+                    <div class="badge-group">
+                        <span class="verified-badge">✅ Oferta Verificada</span>
+                    </div>
+                    <div class="favorite-icon" onclick="toggleFavorito('${p.id}')">${isFav ? '❤️' : '🤍'}</div>
+                    <div class="product-img">
+                        <img src="${imagemProduto}" alt="${p.nome || "Produto"}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Erro'">
+                    </div>
+                    <div class="product-info">
+                        <span class="store-badge" style="${badgeStyle}">${badge.icon} ${badge.nome}</span>
+                        <div class="product-title">${p.nome || "Produto"}</div>
+                        <div class="product-desc">${p.descricao || "Sem descrição"}</div>
+                        <div class="price-row">
+                            <span class="current-price">${precoFormatado || "R$ 0,00"}</span>
+                        </div>
+                        <a href="${p.link || "#"}" target="_blank" rel="noopener noreferrer nofollow" class="buy-btn">👉 COMPRAR AGORA</a>
+                    </div>
+                </div>
+            `;
         }
         container.innerHTML = html;
-        document.querySelectorAll('.product-card .carousel-container').forEach(el => {
-            const id = el.getAttribute('data-id');
-            const produto = filtrados.find(p => p.id == id);
-            if (produto) {
-                const imagens = [produto.imagens_1, produto.imagens_2, produto.imagens_3].filter(img => img && img.trim());
-                ativarCarrosselProduto(el, imagens);
+    }
+
+    // Carrossel automático
+    function initCarousel() {
+        if (!carouselProdutos.length) {
+            carouselContainer.style.display = 'none';
+            return;
+        }
+        carouselContainer.style.display = 'block';
+        carouselTrack.innerHTML = '';
+        carouselProdutos.forEach(prod => {
+            let precoFormatado = prod.preco;
+            if (precoFormatado && !precoFormatado.includes('R$')) {
+                const precoNum = parseFloat(precoFormatado.toString().replace(',', '.'));
+                if (!isNaN(precoNum)) precoFormatado = `R$ ${precoNum.toFixed(2).replace('.', ',')}`;
             }
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            slide.innerHTML = `
+                <a href="${prod.link || "#"}" target="_blank" rel="noopener noreferrer nofollow">
+                    <img class="carousel-img" src="${prod.imagens_1 && prod.imagens_1.trim() ? prod.imagens_1 : 'https://placehold.co/600x400/e2e8f0/FF5E00?text=Produto'}" alt="${prod.nome}" loading="lazy" onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Erro'">
+                    <div class="carousel-info">
+                        <div class="carousel-title">${prod.nome || "Produto"}</div>
+                        <div class="carousel-price">${precoFormatado || "R$ 0,00"}</div>
+                    </div>
+                </a>
+            `;
+            carouselTrack.appendChild(slide);
+        });
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < carouselProdutos.length; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+        updateCarouselPosition();
+        startAutoScroll();
+    }
+
+    function updateCarouselPosition() {
+        const slideWidth = carouselTrack.children[0]?.offsetWidth || 0;
+        carouselTrack.style.transform = `translateX(-${carouselIndex * slideWidth}px)`;
+        document.querySelectorAll('.dot').forEach((dot, i) => {
+            if (i === carouselIndex) dot.classList.add('active');
+            else dot.classList.remove('active');
         });
     }
+
+    function goToSlide(index) {
+        if (index < 0) index = 0;
+        if (index >= carouselProdutos.length) index = carouselProdutos.length - 1;
+        carouselIndex = index;
+        updateCarouselPosition();
+        resetAutoScroll();
+    }
+
+    function nextSlide() { goToSlide(carouselIndex + 1); }
+    function prevSlide() { goToSlide(carouselIndex - 1); }
+
+    let autoScroll;
+    function startAutoScroll() {
+        if (autoScroll) clearInterval(autoScroll);
+        if (carouselProdutos.length > 1) {
+            autoScroll = setInterval(() => nextSlide(), 4000);
+        }
+    }
+    function resetAutoScroll() {
+        if (autoScroll) { clearInterval(autoScroll); startAutoScroll(); }
+    }
+
+    prevBtn?.addEventListener('click', () => { prevSlide(); resetAutoScroll(); });
+    nextBtn?.addEventListener('click', () => { nextSlide(); resetAutoScroll(); });
+    window.addEventListener('resize', () => updateCarouselPosition());
 
     function atualizarBotoesFiltro() {
         document.querySelectorAll('#categoryFilter .filter-chip').forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-cat') === categoriaAtiva));
         document.querySelectorAll('#storeFilter .filter-chip').forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-store') === lojaAtiva));
-    }
-
-    function carregarProdutos() {
-        fetch(API_URL).then(res => res.json()).then(dados => {
-            produtosOriginais = dados.filter(item => item.nome && item.nome.trim() !== "" && item.link && item.link.trim() !== "");
-            produtosOriginais.forEach((p, idx) => { if (!p.id) p.id = `prod_${idx}`; });
-            carregarFavoritos();
-            const produtosOrdenados = [...produtosOriginais].sort((a,b) => (b.id || 0) - (a.id || 0));
-            featuredProdutos = produtosOrdenados.slice(0, 6);
-            initFeaturedCarousel();
-            const cats = new Set(produtosOriginais.map(p => p.categoria).filter(Boolean));
-            const stores = new Set(produtosOriginais.map(p => p.loja).filter(Boolean));
-            categoryFilterDiv.innerHTML = '<button class="filter-chip active" data-cat="todos">📦 Todos</button>' + Array.from(cats).map(c => `<button class="filter-chip" data-cat="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</button>`).join('');
-            storeFilterDiv.innerHTML = '<button class="filter-chip active" data-store="todas">🛒 Todas</button>' + Array.from(stores).map(s => `<button class="filter-chip" data-store="${s}">${s}</button>`).join('');
-            document.querySelectorAll('#categoryFilter .filter-chip').forEach(btn => btn.addEventListener('click', function() { categoriaAtiva = this.getAttribute('data-cat'); atualizarBotoesFiltro(); renderizarProdutos(); updateURL(); closeDrawer(); }));
-            document.querySelectorAll('#storeFilter .filter-chip').forEach(btn => btn.addEventListener('click', function() { lojaAtiva = this.getAttribute('data-store'); atualizarBotoesFiltro(); renderizarProdutos(); updateURL(); closeDrawer(); }));
-            renderizarProdutos();
-            getParamsFromURL();
-            atualizarBotoesFiltro();
-            updateURL();
-        }).catch(erro => { console.error("Erro:", erro); container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">❌ Erro ao carregar produtos. Tente novamente mais tarde.</div>'; });
     }
 
     function updateURL() {
@@ -421,25 +815,62 @@
         const cat = urlParams.get('categoria');
         const loja = urlParams.get('loja');
         const busca = urlParams.get('busca');
-        if (cat && cat !== 'todos') { const btn = document.querySelector(`#categoryFilter .filter-chip[data-cat="${cat}"]`); if (btn) categoriaAtiva = cat; }
-        if (loja && loja !== 'todas') { const btn = document.querySelector(`#storeFilter .filter-chip[data-store="${loja}"]`); if (btn) lojaAtiva = loja; }
-        if (busca && busca.trim() !== "") { termoBusca = busca.trim(); searchInput.value = termoBusca; }
+        if (cat && cat !== 'todos') {
+            const btn = document.querySelector(`#categoryFilter .filter-chip[data-cat="${cat}"]`);
+            if (btn) categoriaAtiva = cat;
+        }
+        if (loja && loja !== 'todas') {
+            const btn = document.querySelector(`#storeFilter .filter-chip[data-store="${loja}"]`);
+            if (btn) lojaAtiva = loja;
+        }
+        if (busca && busca.trim() !== "") {
+            termoBusca = busca.trim();
+            searchInput.value = termoBusca;
+        }
+    }
+
+    async function carregarProdutos() {
+        try {
+            container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">📡 Carregando produtos...</div>';
+            const resposta = await fetch(API_URL);
+            if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
+            const dados = await resposta.json();
+            produtosOriginais = dados.filter(item => item.nome && item.nome.trim() !== "" && item.link && item.link.trim() !== "");
+            produtosOriginais.forEach((p, idx) => { if (!p.id) p.id = `prod_${idx}`; });
+            carregarFavoritos();
+
+            // Carrossel: 6 produtos mais recentes
+            const produtosOrdenados = [...produtosOriginais].sort((a,b) => (b.id || 0) - (a.id || 0));
+            carouselProdutos = produtosOrdenados.slice(0, 6);
+            initCarousel();
+
+            // Popular categorias e lojas
+            const cats = new Set(produtosOriginais.map(p => p.categoria).filter(Boolean));
+            const stores = new Set(produtosOriginais.map(p => p.loja).filter(Boolean));
+            categoryFilterDiv.innerHTML = '<button class="filter-chip active" data-cat="todos">📦 Todos</button>' + Array.from(cats).map(c => `<button class="filter-chip" data-cat="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</button>`).join('');
+            storeFilterDiv.innerHTML = '<button class="filter-chip active" data-store="todas">🛒 Todas</button>' + Array.from(stores).map(s => `<button class="filter-chip" data-store="${s}">${s}</button>`).join('');
+
+            document.querySelectorAll('#categoryFilter .filter-chip').forEach(btn => btn.addEventListener('click', function() { categoriaAtiva = this.getAttribute('data-cat'); atualizarBotoesFiltro(); renderizarProdutos(); updateURL(); }));
+            document.querySelectorAll('#storeFilter .filter-chip').forEach(btn => btn.addEventListener('click', function() { lojaAtiva = this.getAttribute('data-store'); atualizarBotoesFiltro(); renderizarProdutos(); updateURL(); }));
+
+            renderizarProdutos();
+            getParamsFromURL();
+            atualizarBotoesFiltro();
+            updateURL();
+        } catch (erro) {
+            console.error("Erro ao carregar produtos:", erro);
+            container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">❌ Erro ao carregar produtos. Tente novamente mais tarde.</div>';
+        }
     }
 
     searchInput.addEventListener('input', e => { termoBusca = e.target.value; renderizarProdutos(); updateURL(); });
     minPriceInput.addEventListener('input', () => { precoMin = parseFloat(minPriceInput.value) || 0; renderizarProdutos(); });
     maxPriceInput.addEventListener('input', () => { precoMax = parseFloat(maxPriceInput.value) || 999999; renderizarProdutos(); });
     clearPriceBtn.addEventListener('click', () => { minPriceInput.value = 0; maxPriceInput.value = 999999; precoMin = 0; precoMax = 999999; renderizarProdutos(); });
-    sortAlphaBtn.addEventListener('click', () => { ordenacaoAtiva = true; renderizarProdutos(); });
-    clearSortBtn.addEventListener('click', () => { ordenacaoAtiva = false; renderizarProdutos(); });
-    showFavoritesBtn.addEventListener('click', () => { modoFavoritos = true; renderizarProdutos(); closeDrawer(); });
-    showAllBtn.addEventListener('click', () => { modoFavoritos = false; renderizarProdutos(); closeDrawer(); });
+    showFavoritesBtn.addEventListener('click', () => { modoFavoritos = true; renderizarProdutos(); });
+    showAllBtn.addEventListener('click', () => { modoFavoritos = false; renderizarProdutos(); });
     document.getElementById('openPrivacy')?.addEventListener('click', (e) => { e.preventDefault(); openModal('Política de Privacidade', 'Não armazenamos dados bancários ou informações sensíveis. Seus favoritos são salvos apenas no seu navegador. Os links direcionam para lojas oficiais (Amazon, Mercado Livre, Shopee) que possuem suas próprias políticas de privacidade e segurança.'); });
     document.getElementById('openTerms')?.addEventListener('click', (e) => { e.preventDefault(); openModal('Termos de Uso', 'Ao utilizar este site, você concorda que os links são de afiliado e que as compras são realizadas diretamente nas lojas parceiras. Não nos responsabilizamos por eventuais problemas com entrega, qualidade ou trocas, pois essas são de responsabilidade exclusiva das lojas onde a compra foi efetuada.'); });
-
-    prevFeaturedBtn.addEventListener('click', () => { prevFeatured(); resetAutoScroll(); });
-    nextFeaturedBtn.addEventListener('click', () => { nextFeatured(); resetAutoScroll(); });
-    window.addEventListener('resize', () => updateFeaturedSlidePosition());
 
     carregarProdutos();
 </script>
