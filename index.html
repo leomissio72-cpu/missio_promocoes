@@ -128,7 +128,7 @@
             font-weight: 500;
         }
 
-        /* Bloco de filtros (agora com busca inclusa) */
+        /* Bloco de filtros */
         .filters-block {
             background: white;
             border-radius: 1rem;
@@ -505,7 +505,7 @@
         <div class="info-highlight">💡 <strong>Você paga o mesmo preço!</strong> Utilizamos links de afiliado, mas o valor do produto não muda para você.</div>
     </div>
 
-    <!-- Bloco de filtros (com busca, categorias, lojas, preço, favoritos) -->
+    <!-- Bloco de filtros -->
     <div class="filters-block">
         <div class="search-box">
             <span class="search-icon">🔍</span>
@@ -536,7 +536,7 @@
         </div>
     </div>
 
-    <!-- Carrossel automático de destaques -->
+    <!-- Carrossel automático -->
     <div class="featured-carousel" id="featuredCarousel" style="display: none;">
         <div class="carousel-container">
             <div class="carousel-track" id="carouselTrack"></div>
@@ -561,8 +561,12 @@
 </div>
 
 <script>
+    // ============================================================
+    // CONFIGURAÇÃO
+    // ============================================================
     const API_URL = 'https://sheetdb.io/api/v1/b8497l310h84g';
 
+    // Estado global
     let produtosOriginais = [];
     let categoriaAtiva = "todos";
     let lojaAtiva = "todas";
@@ -571,6 +575,17 @@
     let modoFavoritos = false;
     let precoMin = 0;
     let precoMax = 999999;
+
+    // Elementos DOM
+    const container = document.getElementById("productsContainer");
+    const searchInput = document.getElementById("searchInput");
+    const minPriceInput = document.getElementById("minPrice");
+    const maxPriceInput = document.getElementById("maxPrice");
+    const clearPriceBtn = document.getElementById("clearPriceBtn");
+    const showFavoritesBtn = document.getElementById("showFavoritesBtn");
+    const showAllBtn = document.getElementById("showAllBtn");
+    const categoryFilterDiv = document.getElementById("categoryFilter");
+    const storeFilterDiv = document.getElementById("storeFilter");
 
     // Carrossel
     let carouselProdutos = [];
@@ -582,16 +597,7 @@
     const nextBtn = document.getElementById("nextBtn");
     const dotsContainer = document.getElementById("carouselDots");
 
-    const container = document.getElementById("productsContainer");
-    const searchInput = document.getElementById("searchInput");
-    const minPriceInput = document.getElementById("minPrice");
-    const maxPriceInput = document.getElementById("maxPrice");
-    const clearPriceBtn = document.getElementById("clearPriceBtn");
-    const showFavoritesBtn = document.getElementById("showFavoritesBtn");
-    const showAllBtn = document.getElementById("showAllBtn");
-    const categoryFilterDiv = document.getElementById("categoryFilter");
-    const storeFilterDiv = document.getElementById("storeFilter");
-
+    // ========== FUNÇÕES AUXILIARES ==========
     function getStoreBadge(loja) {
         const lojaLower = (loja || "").toLowerCase();
         if (lojaLower === "amazon" || lojaLower === "amazon br") return { nome: "Amazon", classe: "amazon", icon: "🛒" };
@@ -607,6 +613,7 @@
         return isNaN(valor) ? 0 : valor;
     }
 
+    // ========== FAVORITOS ==========
     function carregarFavoritos() {
         const saved = localStorage.getItem("missio_favoritos");
         if (saved) favoritos = new Set(JSON.parse(saved));
@@ -621,6 +628,7 @@
         renderizarProdutos();
     };
 
+    // ========== MODAL ==========
     function openModal(title, content) {
         const modal = document.createElement('div');
         modal.style.position = 'fixed';
@@ -645,38 +653,60 @@
         modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
     }
 
+    // ========== FILTRAGEM ==========
     function filtrarProdutos() {
         let filtrados = [...produtosOriginais];
+        
+        // Filtro por categoria (case-insensitive e normalizado)
         if (categoriaAtiva !== "todos") {
-            filtrados = filtrados.filter(p => (p.categoria || "").toLowerCase() === categoriaAtiva.toLowerCase());
+            filtrados = filtrados.filter(p => {
+                const catProd = (p.categoria || "").toLowerCase().trim();
+                return catProd === categoriaAtiva.toLowerCase().trim();
+            });
         }
+        
+        // Filtro por loja (case-insensitive e normalizado)
         if (lojaAtiva !== "todas") {
             filtrados = filtrados.filter(p => {
-                const lojaProduto = (p.loja || "").toLowerCase();
-                if (lojaAtiva === "amazon") return lojaProduto === "amazon" || lojaProduto === "amazon br";
-                if (lojaAtiva === "mercadolivre") return lojaProduto === "mercadolivre" || lojaProduto === "mercado livre" || lojaProduto === "mercado live";
-                if (lojaAtiva === "shopee") return lojaProduto === "shopee";
+                const lojaProd = (p.loja || "").toLowerCase().trim();
+                if (lojaAtiva === "amazon") return lojaProd === "amazon" || lojaProd === "amazon br";
+                if (lojaAtiva === "mercadolivre") return lojaProd === "mercadolivre" || lojaProd === "mercado livre" || lojaProd === "mercado live";
+                if (lojaAtiva === "shopee") return lojaProd === "shopee";
                 return false;
             });
         }
+        
+        // Busca textual
         if (termoBusca.trim()) {
             const busca = termoBusca.toLowerCase();
-            filtrados = filtrados.filter(p => (p.nome || "").toLowerCase().includes(busca) || (p.descricao || "").toLowerCase().includes(busca));
+            filtrados = filtrados.filter(p => 
+                (p.nome || "").toLowerCase().includes(busca) || 
+                (p.descricao || "").toLowerCase().includes(busca)
+            );
         }
+        
+        // Filtro de preço
         filtrados = filtrados.filter(p => {
             const valor = extrairNumeroPreco(p.preco);
             return valor >= precoMin && valor <= precoMax;
         });
-        if (modoFavoritos) filtrados = filtrados.filter(p => favoritos.has(p.id));
+        
+        // Filtro de favoritos
+        if (modoFavoritos) {
+            filtrados = filtrados.filter(p => favoritos.has(p.id));
+        }
+        
         return filtrados;
     }
 
+    // ========== RENDERIZAÇÃO DOS PRODUTOS ==========
     function renderizarProdutos() {
         const filtrados = filtrarProdutos();
         if (filtrados.length === 0) {
             container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">😕 Nenhum produto encontrado.</div>';
             return;
         }
+        
         let html = "";
         for (let p of filtrados) {
             const badge = getStoreBadge(p.loja);
@@ -685,7 +715,7 @@
                 const precoNum = parseFloat(precoFormatado.toString().replace(',', '.'));
                 if (!isNaN(precoNum)) precoFormatado = `R$ ${precoNum.toFixed(2).replace('.', ',')}`;
             }
-
+            
             let imagemProduto = "https://placehold.co/600x400/e2e8f0/FF5E00?text=Missio+Promo%C3%A7%C3%B5es";
             if (p.imagens_1 && p.imagens_1.trim() !== "") {
                 imagemProduto = p.imagens_1;
@@ -695,7 +725,7 @@
             if (badge.classe === 'amazon') badgeStyle = 'background:#FF9900;color:#232F3E';
             else if (badge.classe === 'mercadolivre') badgeStyle = 'background:#FFE600;color:#1a1a1a';
             else if (badge.classe === 'shopee') badgeStyle = 'background:#EE4D2D;color:white';
-
+            
             html += `
                 <div class="product-card">
                     <div class="badge-group">
@@ -720,7 +750,114 @@
         container.innerHTML = html;
     }
 
-    // Carrossel automático
+    // ========== ATUALIZAR BOTÕES DE FILTRO (ativo/inativo) ==========
+    function atualizarBotoesFiltro() {
+        document.querySelectorAll('#categoryFilter .filter-chip').forEach(btn => {
+            if (btn.getAttribute('data-cat') === categoriaAtiva) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        document.querySelectorAll('#storeFilter .filter-chip').forEach(btn => {
+            if (btn.getAttribute('data-store') === lojaAtiva) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    // ========== CARREGAR PRODUTOS E POPULAR FILTROS ==========
+    async function carregarProdutos() {
+        try {
+            container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">📡 Carregando produtos...</div>';
+            const resposta = await fetch(API_URL);
+            if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
+            const dados = await resposta.json();
+            
+            // Filtra produtos válidos
+            produtosOriginais = dados.filter(item => item.nome && item.nome.trim() !== "" && item.link && item.link.trim() !== "");
+            produtosOriginais.forEach((p, idx) => { if (!p.id) p.id = `prod_${idx}`; });
+            carregarFavoritos();
+            
+            // --- Popular categorias (sem duplicatas, ordenado) ---
+            const catsSet = new Set();
+            produtosOriginais.forEach(p => {
+                if (p.categoria && p.categoria.trim()) {
+                    catsSet.add(p.categoria.trim().toLowerCase());
+                }
+            });
+            const categorias = Array.from(catsSet).sort();
+            
+            // --- Popular lojas (sem duplicatas, ordenado) ---
+            const storesSet = new Set();
+            produtosOriginais.forEach(p => {
+                if (p.loja && p.loja.trim()) {
+                    let lojaNorm = p.loja.trim().toLowerCase();
+                    if (lojaNorm === "mercado livre") lojaNorm = "mercadolivre";
+                    if (lojaNorm === "mercado live") lojaNorm = "mercadolivre";
+                    storesSet.add(lojaNorm);
+                }
+            });
+            const lojas = Array.from(storesSet).sort();
+            
+            // Renderizar chips de categoria
+            categoryFilterDiv.innerHTML = '<button class="filter-chip active" data-cat="todos">📦 Todos</button>';
+            categorias.forEach(cat => {
+                const displayName = cat.charAt(0).toUpperCase() + cat.slice(1);
+                categoryFilterDiv.innerHTML += `<button class="filter-chip" data-cat="${cat}">${displayName}</button>`;
+            });
+            
+            // Renderizar chips de loja
+            storeFilterDiv.innerHTML = '<button class="filter-chip active" data-store="todas">🛒 Todas</button>';
+            lojas.forEach(loja => {
+                let displayName = "";
+                if (loja === "amazon") displayName = "Amazon";
+                else if (loja === "mercadolivre") displayName = "Mercado Livre";
+                else if (loja === "shopee") displayName = "Shopee";
+                else displayName = loja.charAt(0).toUpperCase() + loja.slice(1);
+                storeFilterDiv.innerHTML += `<button class="filter-chip" data-store="${loja}">${displayName}</button>`;
+            });
+            
+            // Adicionar eventos aos chips
+            document.querySelectorAll('#categoryFilter .filter-chip').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    categoriaAtiva = this.getAttribute('data-cat');
+                    atualizarBotoesFiltro();
+                    renderizarProdutos();
+                    updateURL();
+                });
+            });
+            document.querySelectorAll('#storeFilter .filter-chip').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    lojaAtiva = this.getAttribute('data-store');
+                    atualizarBotoesFiltro();
+                    renderizarProdutos();
+                    updateURL();
+                });
+            });
+            
+            // --- Carrossel: 6 produtos mais recentes ---
+            const produtosOrdenados = [...produtosOriginais].sort((a,b) => (b.id || 0) - (a.id || 0));
+            carouselProdutos = produtosOrdenados.slice(0, 6);
+            initCarousel();
+            
+            // Renderizar produtos e restaurar filtros da URL
+            renderizarProdutos();
+            getParamsFromURL();
+            atualizarBotoesFiltro();
+            updateURL();
+            
+        } catch (erro) {
+            console.error("Erro ao carregar produtos:", erro);
+            container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">❌ Erro ao carregar produtos. Tente novamente mais tarde.</div>';
+        }
+    }
+
+    // ========== CARROSSEL ==========
     function initCarousel() {
         if (!carouselProdutos.length) {
             carouselContainer.style.display = 'none';
@@ -794,11 +931,7 @@
     nextBtn?.addEventListener('click', () => { nextSlide(); resetAutoScroll(); });
     window.addEventListener('resize', () => updateCarouselPosition());
 
-    function atualizarBotoesFiltro() {
-        document.querySelectorAll('#categoryFilter .filter-chip').forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-cat') === categoriaAtiva));
-        document.querySelectorAll('#storeFilter .filter-chip').forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-store') === lojaAtiva));
-    }
-
+    // ========== URL ==========
     function updateURL() {
         const url = new URL(window.location);
         url.searchParams.delete('categoria');
@@ -829,49 +962,18 @@
         }
     }
 
-    async function carregarProdutos() {
-        try {
-            container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">📡 Carregando produtos...</div>';
-            const resposta = await fetch(API_URL);
-            if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
-            const dados = await resposta.json();
-            produtosOriginais = dados.filter(item => item.nome && item.nome.trim() !== "" && item.link && item.link.trim() !== "");
-            produtosOriginais.forEach((p, idx) => { if (!p.id) p.id = `prod_${idx}`; });
-            carregarFavoritos();
-
-            // Carrossel: 6 produtos mais recentes
-            const produtosOrdenados = [...produtosOriginais].sort((a,b) => (b.id || 0) - (a.id || 0));
-            carouselProdutos = produtosOrdenados.slice(0, 6);
-            initCarousel();
-
-            // Popular categorias e lojas
-            const cats = new Set(produtosOriginais.map(p => p.categoria).filter(Boolean));
-            const stores = new Set(produtosOriginais.map(p => p.loja).filter(Boolean));
-            categoryFilterDiv.innerHTML = '<button class="filter-chip active" data-cat="todos">📦 Todos</button>' + Array.from(cats).map(c => `<button class="filter-chip" data-cat="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</button>`).join('');
-            storeFilterDiv.innerHTML = '<button class="filter-chip active" data-store="todas">🛒 Todas</button>' + Array.from(stores).map(s => `<button class="filter-chip" data-store="${s}">${s}</button>`).join('');
-
-            document.querySelectorAll('#categoryFilter .filter-chip').forEach(btn => btn.addEventListener('click', function() { categoriaAtiva = this.getAttribute('data-cat'); atualizarBotoesFiltro(); renderizarProdutos(); updateURL(); }));
-            document.querySelectorAll('#storeFilter .filter-chip').forEach(btn => btn.addEventListener('click', function() { lojaAtiva = this.getAttribute('data-store'); atualizarBotoesFiltro(); renderizarProdutos(); updateURL(); }));
-
-            renderizarProdutos();
-            getParamsFromURL();
-            atualizarBotoesFiltro();
-            updateURL();
-        } catch (erro) {
-            console.error("Erro ao carregar produtos:", erro);
-            container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">❌ Erro ao carregar produtos. Tente novamente mais tarde.</div>';
-        }
-    }
-
+    // ========== EVENTOS ==========
     searchInput.addEventListener('input', e => { termoBusca = e.target.value; renderizarProdutos(); updateURL(); });
     minPriceInput.addEventListener('input', () => { precoMin = parseFloat(minPriceInput.value) || 0; renderizarProdutos(); });
     maxPriceInput.addEventListener('input', () => { precoMax = parseFloat(maxPriceInput.value) || 999999; renderizarProdutos(); });
     clearPriceBtn.addEventListener('click', () => { minPriceInput.value = 0; maxPriceInput.value = 999999; precoMin = 0; precoMax = 999999; renderizarProdutos(); });
     showFavoritesBtn.addEventListener('click', () => { modoFavoritos = true; renderizarProdutos(); });
     showAllBtn.addEventListener('click', () => { modoFavoritos = false; renderizarProdutos(); });
+    
     document.getElementById('openPrivacy')?.addEventListener('click', (e) => { e.preventDefault(); openModal('Política de Privacidade', 'Não armazenamos dados bancários ou informações sensíveis. Seus favoritos são salvos apenas no seu navegador. Os links direcionam para lojas oficiais (Amazon, Mercado Livre, Shopee) que possuem suas próprias políticas de privacidade e segurança.'); });
     document.getElementById('openTerms')?.addEventListener('click', (e) => { e.preventDefault(); openModal('Termos de Uso', 'Ao utilizar este site, você concorda que os links são de afiliado e que as compras são realizadas diretamente nas lojas parceiras. Não nos responsabilizamos por eventuais problemas com entrega, qualidade ou trocas, pois essas são de responsabilidade exclusiva das lojas onde a compra foi efetuada.'); });
 
+    // Inicialização
     carregarProdutos();
 </script>
 </body>
