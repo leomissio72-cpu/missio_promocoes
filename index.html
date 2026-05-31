@@ -657,7 +657,6 @@
     function filtrarProdutos() {
         let filtrados = [...produtosOriginais];
         
-        // Filtro por categoria (case-insensitive e normalizado)
         if (categoriaAtiva !== "todos") {
             filtrados = filtrados.filter(p => {
                 const catProd = (p.categoria || "").toLowerCase().trim();
@@ -665,7 +664,6 @@
             });
         }
         
-        // Filtro por loja (case-insensitive e normalizado)
         if (lojaAtiva !== "todas") {
             filtrados = filtrados.filter(p => {
                 const lojaProd = (p.loja || "").toLowerCase().trim();
@@ -676,7 +674,6 @@
             });
         }
         
-        // Busca textual
         if (termoBusca.trim()) {
             const busca = termoBusca.toLowerCase();
             filtrados = filtrados.filter(p => 
@@ -685,13 +682,11 @@
             );
         }
         
-        // Filtro de preço
         filtrados = filtrados.filter(p => {
             const valor = extrairNumeroPreco(p.preco);
             return valor >= precoMin && valor <= precoMax;
         });
         
-        // Filtro de favoritos
         if (modoFavoritos) {
             filtrados = filtrados.filter(p => favoritos.has(p.id));
         }
@@ -750,7 +745,7 @@
         container.innerHTML = html;
     }
 
-    // ========== ATUALIZAR BOTÕES DE FILTRO (ativo/inativo) ==========
+    // ========== ATUALIZAR BOTÕES DE FILTRO ==========
     function atualizarBotoesFiltro() {
         document.querySelectorAll('#categoryFilter .filter-chip').forEach(btn => {
             if (btn.getAttribute('data-cat') === categoriaAtiva) {
@@ -776,7 +771,6 @@
             if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
             const dados = await resposta.json();
             
-            // Filtra produtos válidos
             produtosOriginais = dados.filter(item => item.nome && item.nome.trim() !== "" && item.link && item.link.trim() !== "");
             produtosOriginais.forEach((p, idx) => { if (!p.id) p.id = `prod_${idx}`; });
             carregarFavoritos();
@@ -802,12 +796,15 @@
             });
             const lojas = Array.from(storesSet).sort();
             
-            // Renderizar chips de categoria
+            // Renderizar chips de categoria (com a nova categoria "ferramentas" - será adicionada automaticamente se existir na planilha)
             categoryFilterDiv.innerHTML = '<button class="filter-chip active" data-cat="todos">📦 Todos</button>';
             categorias.forEach(cat => {
-                const displayName = cat.charAt(0).toUpperCase() + cat.slice(1);
+                let displayName = cat.charAt(0).toUpperCase() + cat.slice(1);
                 categoryFilterDiv.innerHTML += `<button class="filter-chip" data-cat="${cat}">${displayName}</button>`;
             });
+            
+            // Caso queira forçar a categoria "Ferramentas" mesmo sem produtos, descomente a linha abaixo:
+            // if (!categorias.includes("ferramentas")) categoryFilterDiv.innerHTML += `<button class="filter-chip" data-cat="ferramentas">Ferramentas</button>`;
             
             // Renderizar chips de loja
             storeFilterDiv.innerHTML = '<button class="filter-chip active" data-store="todas">🛒 Todas</button>';
@@ -845,7 +842,6 @@
             carouselProdutos = produtosOrdenados.slice(0, 6);
             initCarousel();
             
-            // Renderizar produtos e restaurar filtros da URL
             renderizarProdutos();
             getParamsFromURL();
             atualizarBotoesFiltro();
