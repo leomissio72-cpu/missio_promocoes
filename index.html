@@ -220,13 +220,21 @@
             width: 100%;
             text-align: center;
             margin-top: 0.5rem;
+            transition: all 0.2s;
+        }
+        .filter-btn.active {
+            background: #FF5E00;
+            border-color: #FF5E00;
+            color: white;
         }
         .favorite-buttons {
             display: flex;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
         .favorite-buttons button {
             flex: 1;
+            min-width: 120px;
         }
 
         /* Carrossel automático */
@@ -528,10 +536,11 @@
             <button id="clearPriceBtn" class="filter-btn">Limpar filtro</button>
         </div>
         <div class="filter-group">
-            <div class="filter-title">⭐ SEUS FAVORITOS</div>
+            <div class="filter-title">⭐ FILTROS ESPECIAIS & FAVORITOS</div>
             <div class="favorite-buttons">
+                <button id="showAllBtn" class="filter-btn active">🔄 Mostrar todos</button>
+                <button id="recentFilterBtn" class="filter-btn">🕒 Últimos 15 Adicionados</button>
                 <button id="showFavoritesBtn" class="filter-btn">❤️ Ver favoritos</button>
-                <button id="showAllBtn" class="filter-btn">🔄 Mostrar todos</button>
             </div>
         </div>
     </div>
@@ -573,6 +582,7 @@
     let termoBusca = "";
     let favoritos = new Set();
     let modoFavoritos = false;
+    let modoRecentes = false; // Novo filtro de adicionados recentemente
     let precoMin = 0;
     let precoMax = 999999;
 
@@ -583,6 +593,7 @@
     const maxPriceInput = document.getElementById("maxPrice");
     const clearPriceBtn = document.getElementById("clearPriceBtn");
     const showFavoritesBtn = document.getElementById("showFavoritesBtn");
+    const recentFilterBtn = document.getElementById("recentFilterBtn");
     const showAllBtn = document.getElementById("showAllBtn");
     const categoryFilterDiv = document.getElementById("categoryFilter");
     const storeFilterDiv = document.getElementById("storeFilter");
@@ -690,6 +701,20 @@
         if (modoFavoritos) {
             filtrados = filtrados.filter(p => favoritos.has(p.id));
         }
+
+        // Aplica o filtro de adicionados recentemente (últimos 15 adicionados na planilha original)
+        if (modoRecentes) {
+            // Pegamos os IDs dos últimos 15 produtos da lista original
+            const ultimos15Ids = produtosOriginais.slice(-15).map(p => p.id);
+            filtrados = filtrados.filter(p => ultimos15Ids.includes(p.id));
+            
+            // Ordenamos para que o mais recentemente adicionado (fim da planilha) apareça primeiro
+            filtrados.sort((a, b) => {
+                const idxA = produtosOriginais.findIndex(p => p.id === a.id);
+                const idxB = produtosOriginais.findIndex(p => p.id === b.id);
+                return idxB - idxA;
+            });
+        }
         
         return filtrados;
     }
@@ -763,6 +788,23 @@
         });
     }
 
+    // Atualizar classe ativa dos filtros especiais / favoritos
+    function atualizarBotoesEspeciais() {
+        if (modoFavoritos) {
+            showFavoritesBtn.classList.add('active');
+            recentFilterBtn.classList.remove('active');
+            showAllBtn.classList.remove('active');
+        } else if (modoRecentes) {
+            showFavoritesBtn.classList.remove('active');
+            recentFilterBtn.classList.add('active');
+            showAllBtn.classList.remove('active');
+        } else {
+            showFavoritesBtn.classList.remove('active');
+            recentFilterBtn.classList.remove('active');
+            showAllBtn.classList.add('active');
+        }
+    }
+
     // ========== CARREGAR PRODUTOS E POPULAR FILTROS ==========
     async function carregarProdutos() {
         try {
@@ -796,15 +838,12 @@
             });
             const lojas = Array.from(storesSet).sort();
             
-            // Renderizar chips de categoria (com a nova categoria "ferramentas" - será adicionada automaticamente se existir na planilha)
+            // Renderizar chips de categoria
             categoryFilterDiv.innerHTML = '<button class="filter-chip active" data-cat="todos">📦 Todos</button>';
             categorias.forEach(cat => {
                 let displayName = cat.charAt(0).toUpperCase() + cat.slice(1);
                 categoryFilterDiv.innerHTML += `<button class="filter-chip" data-cat="${cat}">${displayName}</button>`;
             });
-            
-            // Caso queira forçar a categoria "Ferramentas" mesmo sem produtos, descomente a linha abaixo:
-            // if (!categorias.includes("ferramentas")) categoryFilterDiv.innerHTML += `<button class="filter-chip" data-cat="ferramentas">Ferramentas</button>`;
             
             // Renderizar chips de loja
             storeFilterDiv.innerHTML = '<button class="filter-chip active" data-store="todas">🛒 Todas</button>';
@@ -817,7 +856,7 @@
                 storeFilterDiv.innerHTML += `<button class="filter-chip" data-store="${loja}">${displayName}</button>`;
             });
             
-            // Adicionar eventos aos chips
+            // Adicionar eventos aos chips de categorias
             document.querySelectorAll('#categoryFilter .filter-chip').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -827,6 +866,8 @@
                     updateURL();
                 });
             });
+            
+            // Adicionar eventos aos chips de loja
             document.querySelectorAll('#storeFilter .filter-chip').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -838,13 +879,18 @@
             });
             
             // --- Carrossel: 6 produtos mais recentes ---
-            const produtosOrdenados = [...produtosOriginais].sort((a,b) => (b.id || 0) - (a.id || 0));
+            const produtosOrdenados = [...produtosOriginais].sort((a,b) => {
+                const idxA = produtosOriginais.findIndex(p => p.id === a.id);
+                const idxB = produtosOriginais.findIndex(p => p.id === b.id);
+                return idxB - idxA;
+            });
             carouselProdutos = produtosOrdenados.slice(0, 6);
             initCarousel();
             
             renderizarProdutos();
             getParamsFromURL();
             atualizarBotoesFiltro();
+            atualizarBotoesEspeciais();
             updateURL();
             
         } catch (erro) {
@@ -962,9 +1008,36 @@
     searchInput.addEventListener('input', e => { termoBusca = e.target.value; renderizarProdutos(); updateURL(); });
     minPriceInput.addEventListener('input', () => { precoMin = parseFloat(minPriceInput.value) || 0; renderizarProdutos(); });
     maxPriceInput.addEventListener('input', () => { precoMax = parseFloat(maxPriceInput.value) || 999999; renderizarProdutos(); });
-    clearPriceBtn.addEventListener('click', () => { minPriceInput.value = 0; maxPriceInput.value = 999999; precoMin = 0; precoMax = 999999; renderizarProdutos(); });
-    showFavoritesBtn.addEventListener('click', () => { modoFavoritos = true; renderizarProdutos(); });
-    showAllBtn.addEventListener('click', () => { modoFavoritos = false; renderizarProdutos(); });
+    
+    clearPriceBtn.addEventListener('click', () => { 
+        minPriceInput.value = 0; 
+        maxPriceInput.value = 999999; 
+        precoMin = 0; 
+        precoMax = 999999; 
+        renderizarProdutos(); 
+    });
+
+    // Filtros especiais / Favoritos
+    recentFilterBtn.addEventListener('click', () => {
+        modoRecentes = true;
+        modoFavoritos = false;
+        atualizarBotoesEspeciais();
+        renderizarProdutos();
+    });
+
+    showFavoritesBtn.addEventListener('click', () => {
+        modoFavoritos = true;
+        modoRecentes = false;
+        atualizarBotoesEspeciais();
+        renderizarProdutos();
+    });
+
+    showAllBtn.addEventListener('click', () => {
+        modoFavoritos = false;
+        modoRecentes = false;
+        atualizarBotoesEspeciais();
+        renderizarProdutos();
+    });
     
     document.getElementById('openPrivacy')?.addEventListener('click', (e) => { e.preventDefault(); openModal('Política de Privacidade', 'Não armazenamos dados bancários ou informações sensíveis. Seus favoritos são salvos apenas no seu navegador. Os links direcionam para lojas oficiais (Amazon, Mercado Livre, Shopee) que possuem suas próprias políticas de privacidade e segurança.'); });
     document.getElementById('openTerms')?.addEventListener('click', (e) => { e.preventDefault(); openModal('Termos de Uso', 'Ao utilizar este site, você concorda que os links são de afiliado e que as compras são realizadas diretamente nas lojas parceiras. Não nos responsabilizamos por eventuais problemas com entrega, qualidade ou trocas, pois essas são de responsabilidade exclusiva das lojas onde a compra foi efetuada.'); });
